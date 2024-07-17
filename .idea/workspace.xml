@@ -55,9 +55,6 @@
     &quot;second&quot;: &quot;cbba68e9-314d-427f-b332-7aa96d53bea1&quot;
   }
 }</component>
-  <component name="PackageJsonUpdateNotifier">
-    <dismissed value="$PROJECT_DIR$/frontend/package.json" />
-  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
