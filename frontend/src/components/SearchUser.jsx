@@ -24,7 +24,6 @@ const SearchUser = () => {
         keepPreviousData: true,
     });
 
-
     const debouncedSearch = useCallback(
         debounce((value) => {
             setId(value);

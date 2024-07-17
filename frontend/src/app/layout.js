@@ -2,6 +2,9 @@ import "./globals.css";
 import ReactQueryProvider from "@/app/providers/ReactQueryProvider";
 import {Inter as FontSans} from "next/font/google"
 import { cn } from "@/lib/utils"
+import Navbar from "@/components/Navbar";
+import '@radix-ui/themes/styles.css';
+import {Theme} from "@radix-ui/themes";
 
 const fontSans = FontSans({
     subsets: ["latin"],
@@ -19,7 +22,10 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={cn("min-h-screen bg-background font-sans antialiased", fontSans.variable)}>
       <ReactQueryProvider>
-      {children}
+          <Theme>
+          <Navbar/>
+            {children}
+          </Theme>
       </ReactQueryProvider>
       </body>
     </html>
