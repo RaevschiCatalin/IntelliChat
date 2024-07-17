@@ -68,6 +68,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "ts.external.directory.path": "/home/pipi/IdeaProjects/RESTAPI/frontend/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -110,7 +111,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1721136772915</updated>
-      <workItem from="1721136774244" duration="3222000" />
+      <workItem from="1721136774244" duration="3573000" />
     </task>
     <servers />
   </component>
