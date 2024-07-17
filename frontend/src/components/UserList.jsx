@@ -1,42 +1,56 @@
-//@ts-nocheck
-"use client"
-import { useEffect, useState } from 'react';
+"use client";
+import { useState } from 'react';
 import userService from "@/userService";
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Alert } from '@/components/ui/alert';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
-
+const fetchUsers = async () => {
+    const response = await userService.getAllUsers();
+    return response.data;
+};
 
 const UserList = () => {
-    const [users, setUsers] = useState([]);
+    const queryClient = useQueryClient();
     const [editUserId, setEditUserId] = useState(null);
     const [editUserData, setEditUserData] = useState({ username: '', email: '' });
     const [error, setError] = useState("");
 
-
-    useEffect(() => {
-        fetchUsers();
-    }, []);
-
-    const fetchUsers = async () => {
-        try {
-            const response = await userService.getAllUsers();
-            setUsers(response.data);
-        } catch (error) {
+    const { data: users = [], isError, error: fetchError } = useQuery({
+        queryKey: ['users'],
+        queryFn: fetchUsers,
+        onError: (error) => {
             console.error('Failed to fetch users:', error);
             setError('Failed to fetch users.');
-        }
-    };
+        },
+    });
 
-    const handleDelete = async (id) => {
-        try {
-            await userService.deleteUser(id);
-            fetchUsers();
-        } catch (error) {
+    const deleteUser = useMutation({
+        mutationFn: userService.deleteUser,
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['users'] });
+        },
+        onError: (error) => {
             console.error('Failed to delete user:', error);
             setError('Failed to delete user.');
         }
+    });
+
+    const updateUser = useMutation({
+        mutationFn: ({ id, data }) => userService.updateUser(id, data),
+        onSuccess: () => {
+            setEditUserId(null);
+            queryClient.invalidateQueries({ queryKey: ['users'] });
+        },
+        onError: (error) => {
+            console.error('Failed to update user:', error);
+            setError('Failed to update user.');
+        }
+    });
+
+    const handleDelete = (id) => {
+        deleteUser.mutate(id);
     };
 
     const handleEdit = (user) => {
@@ -44,21 +58,18 @@ const UserList = () => {
         setEditUserData({ username: user.username, email: user.email });
     };
 
-    const handleSave = async (id) => {
-        try {
-            await userService.updateUser(id, editUserData);
-            setEditUserId(null);
-            fetchUsers();
-        } catch (error) {
-            console.error('Failed to update user:', error);
-            setError('Failed to update user.');
-        }
+    const handleSave = (id) => {
+        updateUser.mutate({ id, data: editUserData });
     };
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setEditUserData({ ...editUserData, [name]: value });
     };
+
+    if (isError) {
+        return <Alert variant="destructive">{fetchError.message}</Alert>;
+    }
 
     return (
         <div className="p-6 max-w-2xl mx-auto bg-white rounded-lg shadow-md border border-gray-200">

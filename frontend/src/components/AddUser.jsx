@@ -1,12 +1,14 @@
-//@ts-nocheck
+
 "use client"
 import { useState } from 'react';
 import userService from "@/userService";
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-const AddUser = ({ onUserAdded }) => {
+const AddUser = () => {
+    const queryClient = useQueryClient();
     const [newUser, setNewUser] = useState({ username: '', email: '' });
     const [error, setError] = useState("");
 
@@ -15,17 +17,23 @@ const AddUser = ({ onUserAdded }) => {
         setNewUser({ ...newUser, [name]: value });
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            await userService.createUser(newUser);
+    const { mutate: createUser } = useMutation({
+        mutationFn: userService.createUser,
+        onSuccess: () => {
             setNewUser({ username: '', email: '' });
             setError(null);
-            onUserAdded();
-        } catch (error) {
+            queryClient.invalidateQueries(['users']);
 
+        },
+        onError: (error) => {
             console.error('Failed to add user:', error);
+            setError('Failed to add user.');
         }
+    });
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        createUser(newUser);
     };
 
     return (

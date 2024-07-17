@@ -1,50 +1,64 @@
-//@ts-nocheck
 "use client"
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import userService from "@/userService";
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Alert } from '@/components/ui/alert';
+import { useQuery } from '@tanstack/react-query';
+import { debounce } from 'lodash';
+
+
+const fetchUser = async (id) => {
+    const response = await userService.getUserById(id);
+    return response.data;
+};
 
 const SearchUser = () => {
     const [id, setId] = useState('');
-    const [foundUser, setFoundUser] = useState(null);
-    const [error, setError] = useState(null);
+    const [searchInput, setSearchInput] = useState('');
 
-    const searchUser = async () => {
-        try {
-            const response = await userService.getUserById(id);
-            setFoundUser(response.data);
-        } catch (e) {
-            console.error(e);
-            setFoundUser(null);
-            setError('Failed to find user.');
-        }
-    };
+    const { data: foundUser, error, isError, isFetching } = useQuery({
+        queryKey: ['user', id],
+        queryFn: () => fetchUser(id),
+        enabled: !!id,
+        keepPreviousData: true,
+    });
+
+
+    const debouncedSearch = useCallback(
+        debounce((value) => {
+            setId(value);
+        }, 800),
+        []
+    );
 
     const onChange = (e) => {
-        setId(e.target.value);
+        const { value } = e.target;
+        setSearchInput(value);
+        debouncedSearch(value);
     };
 
     return (
         <div className="p-6 bg-white rounded-lg shadow-md border border-gray-200 space-y-4">
             <h1 className="text-2xl font-semibold mb-4 text-gray-900 text-center">Search User by Id</h1>
-            {error && (
+            {isError && (
                 <Alert variant="destructive" className="mb-4">
-                    {error}
+                    {error.message}
                 </Alert>
             )}
             <div className="space-y-4">
                 <Input
                     onChange={onChange}
-                    value={id}
+                    value={searchInput}
                     type="text"
                     placeholder="Enter user ID"
                 />
                 <div className="flex justify-center">
-                    <Button type="button" onClick={searchUser}>Search</Button>
+                    <Button type="button" onClick={() => debouncedSearch(searchInput)} disabled={isFetching}>
+                        {isFetching ? 'Searching...' : 'Search'}
+                    </Button>
                 </div>
-                {foundUser && (
+                {foundUser && !isFetching && (
                     <div className="text-center">
                         <h2 className="text-xl font-semibold">User Details</h2>
                         <p>Username: {foundUser.username}</p>
