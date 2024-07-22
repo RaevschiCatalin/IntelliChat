@@ -29,11 +29,5 @@ public class EmailConfirmationController {
             return "verification-error";
         }
     }
-    @GetMapping("/check-email")
-    public Map<String, Boolean> checkEmailVerification(@RequestParam("token") String token) {
-        boolean isVerified = emailVerificationService.verifyEmail(token);
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("isVerified", isVerified);
-        return response;
-    }
+
 }

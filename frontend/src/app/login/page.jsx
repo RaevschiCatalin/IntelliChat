@@ -16,6 +16,8 @@ const Login = () => {
             await loginAUTH(data.email, data.password);
             router.push('/');
         } catch (error) {
+            //display error message
+
             console.error('Login error:', error.response?.data?.message || error.message);
         }
     };
