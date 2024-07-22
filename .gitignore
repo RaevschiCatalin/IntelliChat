@@ -87,5 +87,5 @@ build/
 *.tmp
 
 
-frontend/node_modules/
 test/node_modules/
+frontend/node_modules/
