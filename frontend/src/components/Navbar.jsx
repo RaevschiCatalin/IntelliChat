@@ -4,10 +4,11 @@ import { useAxios } from '@/context/AxiosContext';
 import Link from 'next/link';
 import { Button } from "@/components/ui/button";
 import { useRouter } from 'next/navigation';
+import Image from "next/image";
+import Logo from "@/assets/logo.svg";
 
 const Navbar = () => {
     const { token, logoutAUTH } = useAxios();
-    console.log('Token:', token);
     const router = useRouter();
     const handleLogout = () => {
         logoutAUTH();
@@ -17,8 +18,10 @@ const Navbar = () => {
     return (
         <nav className="py-4 mb-6 fixed w-full top-0 left-0 bg-transparent z-50">
             <div className="container mx-auto flex items-center justify-between px-4">
-                <div className="text-2xl font-bold text-gray-900">
-                    <Link href="/">Logo</Link>
+                <div className="text-2xl mx-3 font-bold text-gray-900">
+                    <Link href="/">
+                    <Image src={Logo} width={40} height={40} alt={"Logo"}/>
+                    </Link>
                 </div>
                 <div className="hidden md:flex space-x-6">
                     <Link href="/admin" className="text-gray-900 hover:underline hover:font-bold transition">Admin</Link>

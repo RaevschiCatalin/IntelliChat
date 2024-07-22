@@ -19,6 +19,9 @@ public class AuthenticationService {
     private final JwtService jwtService;
 
     @Autowired
+    private EmailVerificationService emailVerificationService;
+
+    @Autowired
     public AuthenticationService(Repository userRepository, PasswordEncoder passwordEncoder, JwtService jwtService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
@@ -33,17 +36,24 @@ public class AuthenticationService {
             throw new UsernameExistsException("Username already exists: " + user.getUsername());
         });
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setEnabled(false);
         userRepository.save(user);
+        emailVerificationService.generateAndSendVerificationToken(user);
         return jwtService.generateToken(user.getEmail());
     }
 
     public String authenticateUser(String email, String password) {
         Optional<User> user = userRepository.findByEmail(email);
         if (user.isPresent() && passwordEncoder.matches(password, user.get().getPassword())) {
+            if (!user.get().isEnabled()) {
+                throw new IllegalStateException("Email not verified. Please verify your email before logging in.");
+            }
             return jwtService.generateToken(email);
         }
         return null;
     }
+
+
     public void deleteAllUsers() {
         userRepository.deleteAllInBatch();
     }

@@ -1,14 +1,29 @@
 spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: raevschicatalin@gmail.com
+    password: dody nlvs roxd lukb
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
   docker:
     compose:
       enabled: true
+
   application:
     name: App
+
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
     password: postgres
     driverClassName: org.postgresql.Driver
+
   jpa:
     database: POSTGRESQL
     show-sql: true
@@ -21,7 +36,6 @@ server:
 springdoc:
   api-docs:
     path: /api-docs
-
 
 jwt:
   secret: 0684c7c87c4bfb5dc1b1c66b7bdcec2aa462f70a52498ccde03d8a02d26d0eb5

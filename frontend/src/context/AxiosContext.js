@@ -15,6 +15,7 @@ export const AxiosProvider = ({ children }) => {
     }, []);
 
 
+
     const loginAUTH = async (email, password) => {
         try {
             const response = await axiosInstance.post('/auth/login', { email, password });
@@ -56,6 +57,7 @@ export const AxiosProvider = ({ children }) => {
     const deleteAUTH = async (url) => {
         return await axiosInstance.delete(url);
     };
+
 
 
 

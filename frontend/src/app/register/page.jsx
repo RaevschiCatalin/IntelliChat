@@ -14,7 +14,7 @@ const Register = () => {
     const onSubmit = async (data) => {
         try {
             await registerAUTH(data.username, data.email, data.password);
-            router.push('/login');
+            router.push('/verify-email');
         } catch (error) {
             console.error('Registration error:', error.response?.data?.message || error.message);
         }
