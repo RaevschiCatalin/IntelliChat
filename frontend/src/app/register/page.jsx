@@ -1,16 +1,23 @@
-// src/app/register/page.jsx
+"use client";
 import { useForm } from 'react-hook-form';
 import Link from 'next/link';
 import { Button } from "@/components/ui/button";
 import { Input } from '@/components/ui/input';
+import { useRouter } from 'next/navigation';
+import { useAxios } from "@/context/AxiosContext";
 
 const Register = () => {
-   const handleSubmit = (e) => {
+    const router = useRouter();
+    const { registerAUTH } = useAxios();
+    const { register, handleSubmit, formState: { errors } } = useForm();
 
-   }
     const onSubmit = async (data) => {
-
-        console.log(data);
+        try {
+            await registerAUTH(data.username, data.email, data.password);
+            router.push('/login');
+        } catch (error) {
+            console.error('Registration error:', error.response?.data?.message || error.message);
+        }
     };
 
     return (
@@ -20,29 +27,30 @@ const Register = () => {
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                     <div>
                         <Input
+                            {...register("username", { required: true })}
                             type="text"
                             placeholder="Username"
-
                             className="border-gray-300 focus:border-black focus:ring-black"
                         />
-
+                        {errors.username && <p className="text-red-500">Username is required</p>}
                     </div>
                     <div>
                         <Input
+                            {...register("email", { required: true })}
                             type="email"
                             placeholder="Email"
                             className="border-gray-300 focus:border-black focus:ring-black"
                         />
-
+                        {errors.email && <p className="text-red-500">Email is required</p>}
                     </div>
                     <div>
                         <Input
+                            {...register("password", { required: true })}
                             type="password"
                             placeholder="Password"
-
                             className="border-gray-300 focus:border-black focus:ring-black"
                         />
-
+                        {errors.password && <p className="text-red-500">Password is required</p>}
                     </div>
                     <Button type="submit" className="w-full">Register</Button>
                 </form>

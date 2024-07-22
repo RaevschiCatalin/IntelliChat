@@ -1,8 +1,8 @@
-//@ts-nocheck
+
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080/api/users';
 
+const API_URL = 'http://localhost:8080/api/users';
 
 
 const getAllUsers = () => {
@@ -21,10 +21,21 @@ const updateUser = (id, user) => {
     return axios.put(API_URL + '/' + id, user);
 }
 
+export const fetchUserDataByIdentifier = async (identifier) => {
+    try {
+        const response = await axios.get(`${API_URL}${identifier}`);
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching user data: ", error);
+        return null;
+    }
+};
+
+
 export default {
     getAllUsers,
     getUserById,
     createUser,
     deleteUser,
-    updateUser
+    updateUser,
 }

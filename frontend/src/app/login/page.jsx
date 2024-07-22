@@ -1,17 +1,23 @@
-// src/app/login/page.jsx
-import { useForm } from 'react-hook-form';
+"use client";
 import Link from 'next/link';
 import { Button } from "@/components/ui/button";
 import { Input } from '@/components/ui/input';
+import { useRouter } from 'next/navigation';
+import { useForm } from 'react-hook-form';
+import { useAxios } from "@/context/AxiosContext";
 
 const Login = () => {
-    const handleSubmit = async (e) => {
-
-    }
+    const router = useRouter();
+    const { loginAUTH } = useAxios();
+    const { register, handleSubmit, formState: { errors } } = useForm();
 
     const onSubmit = async (data) => {
-
-        console.log(data);
+        try {
+            await loginAUTH(data.email, data.password);
+            router.push('/');
+        } catch (error) {
+            console.error('Login error:', error.response?.data?.message || error.message);
+        }
     };
 
     return (
@@ -21,21 +27,21 @@ const Login = () => {
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                     <div>
                         <Input
+                            {...register("email", { required: true })}
                             type="email"
                             placeholder="Email"
-
                             className="border-gray-300 focus:border-black focus:ring-black"
                         />
-
+                        {errors.email && <p className="text-red-500">Email is required</p>}
                     </div>
                     <div>
                         <Input
+                            {...register("password", { required: true })}
                             type="password"
                             placeholder="Password"
-
                             className="border-gray-300 focus:border-black focus:ring-black"
                         />
-
+                        {errors.password && <p className="text-red-500">Password is required</p>}
                     </div>
                     <Button type="submit" className="w-full">Login</Button>
                 </form>

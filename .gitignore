@@ -87,3 +87,4 @@ build/
 *.tmp
 
 
+frontend/node_modules/
