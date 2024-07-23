@@ -27,11 +27,11 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.POST, "/api/auth/register", "/api/auth/login","api/users","api/auth/delete").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/users/{id}","/api/users","api/auth/verify-email","api/auth/check-email").permitAll()
-                        .requestMatchers(HttpMethod.PUT, "api/users/{id}").permitAll()
-                        .requestMatchers(HttpMethod.DELETE, "api/users/{id}").permitAll()
-                                                .anyRequest().authenticated()
+                        .requestMatchers(HttpMethod.POST, "/api/auth/register", "/api/auth/login", "/api/users", "/api/auth/delete", "/api/auth/forgot-password", "/api/auth/reset-password").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/users/{id}", "/api/users", "/api/auth/verify-email", "/api/auth/check-email").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/api/users/{id}", "/api/auth/forgot-password").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/api/users/{id}", "/api/auth/delete").permitAll()
+                        .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

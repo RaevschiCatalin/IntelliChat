@@ -9,7 +9,6 @@ import jakarta.mail.internet.MimeMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -35,14 +34,16 @@ public class EmailVerificationService {
     private TemplateEngine templateEngine;
 
     public void generateAndSendVerificationToken(User user) {
+        EmailVerificationToken existingToken = tokenRepository.findByToken(user.getEmail());
+        if (existingToken != null) {
+            tokenRepository.delete(existingToken);
+        }
         String token = UUID.randomUUID().toString();
         EmailVerificationToken verificationToken = new EmailVerificationToken();
-
         verificationToken.setToken(token);
         verificationToken.setUser(user);
         verificationToken.setExpiryDate(LocalDateTime.now().plusHours(24));
         tokenRepository.save(verificationToken);
-
         sendVerificationEmail(user, token);
     }
 
@@ -81,9 +82,25 @@ public class EmailVerificationService {
     }
 
 
+    public void sendResetPasswordEmail(User user, String token) {
+        String subject = "Reset Password";
+        String url = "http://localhost:3000/reset-password?token=" + token;
 
-    public boolean isEmailVerified(String email) {
-        User user = userRepository.findByEmail(email).orElse(null);
-        return user != null && user.isEnabled();
+        Context context = new Context();
+        context.setVariable("resetUrl", url);
+        String body = templateEngine.process("reset_password_email", context);
+
+        try {
+            MimeMessage mimeMessage = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+            helper.setTo(user.getEmail());
+            helper.setSubject(subject);
+            helper.setText(body, true);
+
+            mailSender.send(mimeMessage);
+            logger.info("Reset password email sent to {}", user.getEmail());
+        } catch (MessagingException e) {
+            logger.error("Failed to send reset password email to {}", user.getEmail(), e);
+        }
     }
 }
