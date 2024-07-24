@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.Map;
 
 
@@ -67,7 +68,19 @@ public class AuthenticationController {
             return "reset-error";
         }
     }
+    @GetMapping("/loginSuccess")
+    public ResponseEntity<?> loginSuccess(Principal principal) {
+        // Handle successful OpenID Connect login here
+        log.info("OpenID Connect login success for user {}", principal.getName());
+        return ResponseEntity.ok("Login successful!");
+    }
 
+    @GetMapping("/loginFailure")
+    public ResponseEntity<?> loginFailure() {
+        // Handle failed OpenID Connect login here
+        log.info("OpenID Connect login failure");
+        return ResponseEntity.status(401).body("Login failed");
+    }
 
     @DeleteMapping("/delete")
     public ResponseEntity<?> deleteAllUsers() {

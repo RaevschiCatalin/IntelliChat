@@ -1,11 +1,6 @@
 package io.ctif.proiect.config;
 
-import io.ctif.proiect.service.JwtService;
-import io.ctif.proiect.service.UserService;
-
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -22,11 +17,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final JwtRequestFilter jwtRequestFilter;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/", "/error", "/webjars/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/auth/register", "/api/auth/login", "/api/users", "/api/auth/delete", "/api/auth/forgot-password", "/api/auth/reset-password").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/users/{id}", "/api/users", "/api/auth/verify-email", "/api/auth/check-email").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/api/users/{id}", "/api/auth/forgot-password").permitAll()
@@ -36,9 +33,12 @@ public class SecurityConfig {
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
-                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
+                .oauth2Login(oauth2Login -> oauth2Login
+                        .defaultSuccessUrl("/api/auth/loginSuccess")
+                        .failureUrl("/api/auth/loginFailure")
+                );
 
         return http.build();
     }
-
 }
