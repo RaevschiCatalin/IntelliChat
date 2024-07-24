@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # Node.js
 node_modules/
 npm-debug.log*
@@ -52,6 +52,6 @@ frontend/node_modules/.pnpm/@next+swc-linux-x64-gnu@14.2.5/node_modules/@next/sw
 node_modules/
 frontend/node_modules/
 test/node_modules/
-=======
+
 node_modules
->>>>>>> d455807001982ab2be37cd1ad41f158d0487266e
+
