@@ -1,10 +1,14 @@
 "use client"
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import ResetPasswordForm from '@/components/ResetPasswordForm';
 
-const ResetPasswordPage = async () => {
-    const searchParams = useSearchParams();
-    const token = searchParams.get('token');
+const ResetPasswordPage = () => {
+    const [token, setToken] = useState('');
+
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        setToken(params.get('token') || '');
+    }, []);
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
