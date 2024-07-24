@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { useAxios } from "@/context/AxiosContext";
 import { useState } from 'react';
+import { signIn } from 'next-auth/react'; // Import for NextAuth.js
 
 const Login = () => {
     const router = useRouter();
@@ -49,6 +50,9 @@ const Login = () => {
                     </div>
                     <Button type="submit" className="w-full">Login</Button>
                 </form>
+                <Button onClick={() => signIn('google')} className="w-full mt-4">
+                    Login with Google
+                </Button>
                 <p className="text-center mt-4 text-gray-600">
                     Don't have an account? <Link href="/register" className="text-blue-500 hover:underline">Register</Link>
                 </p>

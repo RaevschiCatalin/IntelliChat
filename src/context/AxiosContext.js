@@ -6,7 +6,6 @@ const AxiosContext = createContext();
 
 export const AxiosProvider = ({ children }) => {
     const [token, setToken] = useState(null);
-
     useEffect(() => {
         const storedToken = localStorage.getItem('jwtToken');
         if (storedToken) {

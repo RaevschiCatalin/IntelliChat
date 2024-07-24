@@ -1,31 +1,23 @@
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
+import config from "@/lib/config"
 
-export const authOptions = {
+const {GOOGLE_CLIENT_ID,GOOGLE_CLIENT_SECRET} = config;
+export default NextAuth({
     providers: [
         GoogleProvider({
-            clientId: process.env.GOOGLE_CLIENT_ID,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+            clientId: GOOGLE_CLIENT_ID,
+            clientSecret: GOOGLE_CLIENT_SECRET,
         }),
     ],
     pages: {
-        signIn: '/login', // Redirect here if not authenticated
-        error: '/auth/error', // Error handling page
+        signIn: '/login',
+        error: '/login?error'
     },
     callbacks: {
-        async jwt({ token, user }) {
-            if (user) {
-                token.id = user.id;
-                token.email = user.email;
-            }
-            return token;
-        },
         async session({ session, token }) {
-            session.user.id = token.id;
-            session.user.email = token.email;
+            session.user.id = token.sub;
             return session;
         },
     },
-};
-
-export default NextAuth(authOptions);
+});
