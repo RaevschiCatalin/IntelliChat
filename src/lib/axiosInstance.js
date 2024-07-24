@@ -1,7 +1,9 @@
 import axios from 'axios';
+import config from "@/lib/config"
 
+const {API_BASE_URL} = config;
 const axiosInstance = axios.create({
-    baseURL: `${process.env.NEXT_PUBLIC_BASE_URL}`,
+    baseURL: `${API_BASE_URL}`,
     headers: {
         'Content-Type': 'application/json',
     },
