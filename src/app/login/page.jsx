@@ -50,9 +50,9 @@ const Login = () => {
                     </div>
                     <Button type="submit" className="w-full">Login</Button>
                 </form>
-                <Button onClick={() => signIn('google')} className="w-full mt-4">
-                    Login with Google
-                </Button>
+                {/*<Button onClick={() => signIn('google')} className="w-full mt-4">*/}
+                {/*    Login with Google*/}
+                {/*</Button>*/}
                 <p className="text-center mt-4 text-gray-600">
                     Don't have an account? <Link href="/register" className="text-blue-500 hover:underline">Register</Link>
                 </p>
