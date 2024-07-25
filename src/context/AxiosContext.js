@@ -1,6 +1,7 @@
 "use client";
 import { createContext, useContext, useState, useEffect } from 'react';
 import axiosInstance from "@/lib/axiosInstance";
+import {fetchLlamaResponse} from "@/utils/api";
 
 const AxiosContext = createContext();
 
@@ -55,9 +56,15 @@ export const AxiosProvider = ({ children }) => {
     const deleteAUTH = async (url) => {
         return await axiosInstance.delete(url);
     };
+    const getLlamaResponse = async (input) => {
+        if (!token) {
+            throw new Error('No authentication token available');
+        }
+        return await fetchLlamaResponse(input, token);
+    };
 
     return (
-        <AxiosContext.Provider value={{ token, loginAUTH, registerAUTH, logoutAUTH, getAUTH, postAUTH, putAUTH, deleteAUTH }}>
+        <AxiosContext.Provider value={{ token, loginAUTH, registerAUTH, logoutAUTH, getAUTH, postAUTH, putAUTH, deleteAUTH,getLlamaResponse }}>
             {children}
         </AxiosContext.Provider>
     );
