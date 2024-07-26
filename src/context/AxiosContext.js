@@ -58,10 +58,16 @@ export const AxiosProvider = ({ children }) => {
     const deleteAUTH = async (url) => {
         return await axiosInstance.delete(url);
     };
+    const getUserByEmail = async (email) => {
+        const config = {
+            headers: { Authorization: `Bearer ${token}` }
+        };
+        return await axiosInstance.get(`/users/search?email=${email}`, config);
+    };
 
 
     return (
-        <AxiosContext.Provider value={{ token, loginAUTH, registerAUTH, logoutAUTH, getAUTH, postAUTH, putAUTH, deleteAUTH}}>
+        <AxiosContext.Provider value={{ token, loginAUTH, registerAUTH, logoutAUTH, getAUTH, postAUTH, putAUTH, deleteAUTH,getUserByEmail}}>
             {children}
         </AxiosContext.Provider>
     );

@@ -30,7 +30,7 @@ export default function Chat() {
             console.error('Error fetching AI response:', error);
             setLoading(false);
         };
-
+        setInput('');
         await getAiResponse(input, onData, onComplete, onError);
     };
 
