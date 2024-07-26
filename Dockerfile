@@ -8,7 +8,9 @@ WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
 
 # Install dependencies
+
 RUN npm install -g pnpm && pnpm install --prod
+
 
 # Copy the build output and other necessary files
 COPY .next ./.next

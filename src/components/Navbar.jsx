@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React from 'react';
 import { useAxios } from '@/context/AxiosContext';
 import Link from 'next/link';
@@ -10,6 +10,7 @@ import Logo from "@/assets/logo.svg";
 const Navbar = () => {
     const { token, logoutAUTH } = useAxios();
     const router = useRouter();
+
     const handleLogout = () => {
         logoutAUTH();
         router.push('/');
@@ -20,20 +21,26 @@ const Navbar = () => {
             <div className="container mx-auto flex items-center justify-between px-4">
                 <div className="text-2xl mx-3 font-bold text-gray-900">
                     <Link href="/">
-                    <Image src={Logo} width={40} height={40} alt={"Logo"}/>
+                        <Image src={Logo} width={40} height={40} alt={"Logo"}/>
                     </Link>
                 </div>
                 <div className="hidden md:flex space-x-6">
-                    <Link href="/admin" className="text-gray-900 hover:underline hover:font-bold transition">Admin</Link>
-                    <Link href="#about" className="text-gray-900 hover:underline hover:font-bold transition">About</Link>
-                    <Link href="#services" className="text-gray-900 hover:underline hover:font-bold transition">Services</Link>
-                    <Link href="#contact" className="text-gray-900 hover:underline hover:font-bold transition">Contact</Link>
+                    <Link href="/"
+                          className="text-gray-900 hover:text-blue-600 transition duration-400 ease-in-out">Home</Link>
+                    <Link href="/chat"
+                          className="text-gray-900 hover:text-blue-600 transition duration-400 ease-in-out">Chat</Link>
+                    <Link href="#about"
+                          className="text-gray-900 hover:text-blue-600 transition duration-400 ease-in-out">About</Link>
+                    <Link href="#services"
+                          className="text-gray-900 hover:text-blue-600 transition duration-400 ease-in-out">Services</Link>
+                    <Link href="#contact"
+                          className="text-gray-900 hover:text-blue-600 transition duration-400 ease-in-out">Contact</Link>
                 </div>
                 <div className="hidden md:flex space-x-4">
                     {token ? (
                         <>
                             <Link href="/profile">
-                                <Button className="custom-button">
+                                <Button className="custom-button transition duration-1000 ease-in-out">
                                     <svg className="w-4/5 h-4/5" fill="none" stroke="var(--svg-stroke-color)"
                                          viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
@@ -41,22 +48,22 @@ const Navbar = () => {
                                     </svg>
                                 </Button>
                             </Link>
-                            <Button onClick={handleLogout} className="rounded-3xl border-2 border-black hover:bg-slate-100 hover:text-black">
+                            <Button onClick={handleLogout} className="rounded-3xl border-2 border-black hover:bg-slate-100 hover:text-black transition duration-500 ease-in-out">
                                 Logout
                             </Button>
                         </>
                     ) : (
                         <>
                             <Link href="/login">
-                                <Button className="bg-slate100 text-black rounded-3xl border-2 border-black hover:bg-black hover:text-white">Login</Button>
+                                <Button className="bg-slate100 text-black rounded-3xl border-2 border-black hover:bg-black hover:text-white transition duration-500 ease-in-out">Login</Button>
                             </Link>
                             <Link href="/register">
-                                <Button className="rounded-3xl hover:bg-slate-100 hover:text-black border-2 border-black">Register</Button>
+                                <Button className="rounded-3xl hover:bg-slate-100 hover:text-black border-2 border-black transition duration-500 ease-in-out">Register</Button>
                             </Link>
                         </>
                     )}
                 </div>
-                <button className="md:hidden text-gray-900">
+                <button className="md:hidden text-gray-900 transition duration-1000 ease-in-out">
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7" />
                     </svg>
