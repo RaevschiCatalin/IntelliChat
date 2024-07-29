@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @SpringBootApplication
+
 public class ProiectApplication {
     @GetMapping
     public String hello(){

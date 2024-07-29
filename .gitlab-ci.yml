@@ -28,6 +28,6 @@ deploy:
   script:
     - echo "Deploying image..."
     - docker pull git-lab.ctif.md:4567/catalin.raebschi/backend:latest
-    - docker run --rm git-lab.ctif.md:4567/catalin.raebschi/backend:latest echo "Deployed!"
+    - docker run --rm git-lab.ctif.md:4567/catalin.raebschi/backend:latest
   only:
     - master
