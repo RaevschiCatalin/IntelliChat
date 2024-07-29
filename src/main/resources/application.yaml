@@ -10,7 +10,12 @@ spring:
           auth: true
           starttls:
             enable: true
-
+  ai:
+    ollama:
+      base-url: localhost:11434
+      chat:
+        options:
+          model: "llama3.1"
   security:
     oauth2:
       client:
@@ -54,5 +59,6 @@ springdoc:
 jwt:
   secret: 0684c7c87c4bfb5dc1b1c66b7bdcec2aa462f70a52498ccde03d8a02d26d0eb5
   expiration: 86400000
+
 
 

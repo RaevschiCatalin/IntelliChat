@@ -68,19 +68,7 @@ public class AuthenticationController {
             return "reset-error";
         }
     }
-    @GetMapping("/loginSuccess")
-    public ResponseEntity<?> loginSuccess(Principal principal) {
-        // Handle successful OpenID Connect login here
-        log.info("OpenID Connect login success for user {}", principal.getName());
-        return ResponseEntity.ok("Login successful!");
-    }
 
-    @GetMapping("/loginFailure")
-    public ResponseEntity<?> loginFailure() {
-        // Handle failed OpenID Connect login here
-        log.info("OpenID Connect login failure");
-        return ResponseEntity.status(401).body("Login failed");
-    }
 
     @DeleteMapping("/delete")
     public ResponseEntity<?> deleteAllUsers() {
