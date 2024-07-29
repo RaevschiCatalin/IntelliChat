@@ -8,8 +8,8 @@ stages:
 variables:
   DOCKER_DRIVER: overlay2
 
-before_script:
-  - gradle --version
+#before_script:
+#  - gradle --version
 
 build:
   stage: build
