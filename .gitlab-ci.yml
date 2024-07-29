@@ -24,6 +24,7 @@ test:
 
 deploy:
   stage: deploy
+  image: docker:dind
   script:
     - echo "Deploying image..."
     - docker pull git-lab.ctif.md:4567/catalin.raebschi/backend:latest
