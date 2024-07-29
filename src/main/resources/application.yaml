@@ -38,9 +38,9 @@ spring:
     name: App
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
-    username: postgres
-    password: postgres
+    url: jdbc:postgresql://172.16.48.13:5432/postgres
+    username: myuser
+    password: mypassword
     driverClassName: org.postgresql.Driver
 
   jpa:
