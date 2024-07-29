@@ -1,6 +1,7 @@
 package io.ctif.proiect.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.ctif.proiect.config.WebClientConfig;
 import io.ctif.proiect.model.GenerateRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.FluxSink;
-
 
 @Slf4j
 @RestController
@@ -20,11 +19,14 @@ import reactor.core.publisher.FluxSink;
 public class ChatController {
 
     private final WebClient webClient;
+    private final WebClientConfig webClientConfig;
+
     @Value("${ollama.url}")
     private String ollamaUrl;
-    public ChatController(WebClient.Builder webClientBuilder) {
-        log.info("Ollama URL: {}", ollamaUrl);
-        this.webClient = webClientBuilder.baseUrl(ollamaUrl).build();
+
+    public ChatController(WebClient.Builder webClientBuilder, WebClientConfig webClientConfig) {
+        this.webClient = webClientBuilder.baseUrl(webClientConfig.getUrl()).build();
+        this.webClientConfig = webClientConfig;
     }
 
     @GetMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE)
@@ -35,6 +37,7 @@ public class ChatController {
     ) {
         return Flux.create(emitter -> {
             try {
+                log.info("Ollama URL: {}", webClientConfig.getUrl());
                 GenerateRequest request = new GenerateRequest(model, prompt, temperature);
                 String jsonInputString = new ObjectMapper().writeValueAsString(request);
 
