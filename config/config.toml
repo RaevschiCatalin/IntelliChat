@@ -22,8 +22,8 @@ shutdown_timeout = 0
     [runners.cache.azure]
   [runners.docker]
     tls_verify = false
-    image = "docker"
-    privileged = false
+    image = "docker:latest"
+    privileged = true
     disable_entrypoint_overwrite = false
     oom_kill_disable = false
     disable_cache = false
@@ -47,11 +47,12 @@ shutdown_timeout = 0
     [runners.cache.azure]
   [runners.docker]
     tls_verify = false
-    image = "docker"
-    privileged = false
+    image = "docker:latest"
+    privileged = true
     disable_entrypoint_overwrite = false
     oom_kill_disable = false
     disable_cache = false
-    volumes = ["/cache"]
+    volumes = ["/cache", "/var/run/docker.sock:/var/run/docker.sock"]
     shm_size = 0
     network_mtu = 0
+
