@@ -1,0 +1,27 @@
+stages:
+  - build
+  - deploy
+
+services:
+  - docker:dind
+
+variables:
+  IMAGE_TAG: "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA"
+
+before_script:
+  - docker-compose -f docker-compose.builder.yaml version
+  - docker-compose -f docker-compose.builder.yaml up -d
+
+build:
+  stage: build
+  script:
+    - docker-compose -f docker-compose.builder.yaml build
+  only:
+    - main
+
+deploy:
+  stage: deploy
+  script:
+    - docker-compose -f docker-compose.builder.yaml up -d
+  only:
+    - main

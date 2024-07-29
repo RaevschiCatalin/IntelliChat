@@ -1,30 +1,29 @@
-# Stage 1: Build the application with Gradle
-FROM gradle:7.6-jdk17 AS build
+# Use the official Gradle image to build the application
+FROM gradle:8.1.1-jdk17 AS build
 
 # Set the working directory
 WORKDIR /app
 
-# Copy Gradle files
+# Copy the build.gradle and settings.gradle files
 COPY build.gradle settings.gradle ./
-COPY gradle ./gradle
 
 # Copy the source code
-COPY src ./src
+COPY src /app/src
 
 # Build the application
 RUN gradle build --no-daemon
 
-# Stage 2: Run the application with a minimal JRE image
-FROM openjdk:17-jdk-slim
+# Use the official OpenJDK image to run the application
+FROM openjdk:17-jdk-alpine
 
 # Set the working directory
 WORKDIR /app
 
-# Copy the built JAR from the build stage
-COPY --from=build /app/build/libs/myapp.jar /app/myapp.jar
+# Copy the jar file from the build stage
+COPY --from=build /app/build/libs/*.jar app.jar
 
-# Expose the application port
+# Expose the port that the application will run on
 EXPOSE 8080
 
-# Command to run the application
-ENTRYPOINT ["java", "-jar", "/app/myapp.jar"]
+# Run the application
+ENTRYPOINT ["java", "-jar", "app.jar"]
