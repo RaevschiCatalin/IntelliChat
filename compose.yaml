@@ -25,6 +25,8 @@ services:
       - "11435:11434"
     networks:
       - postgres_network
+    command:
+      - ollama run llama3.1
 networks:
   postgres_network:
     driver: bridge
