@@ -1,9 +1,20 @@
-version: '3.8'
-
 services:
-  postgres:
+  backend:
+    image: git-lab.ctif.md:4567/catalin.raebschi/backend:latest
+    container_name: backend
+    ports:
+      - "8080:8080"
+    networks:
+      - network
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/mydatabase
+      SPRING_DATASOURCE_USERNAME: myuser
+      SPRING_DATASOURCE_PASSWORD: mypassword
+
+  db:
     image: postgres:latest
-    container_name: my_postgres
     restart: always
     environment:
       POSTGRES_DB: mydatabase
@@ -14,24 +25,22 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
-      - postgres_network
-  ollama:
+      - network
+  model:
     image: ollama/ollama
-    container_name: my_ollama
     restart: always
     volumes:
       - ollama_data:/app/data
     ports:
       - "11435:11434"
     networks:
-      - postgres_network
+      - network
 networks:
-  postgres_network:
+  network:
     driver: bridge
-
 
 volumes:
   postgres_data:
+    driver: local
   ollama_data:
     driver: local
-

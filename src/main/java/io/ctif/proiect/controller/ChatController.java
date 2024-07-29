@@ -2,6 +2,8 @@ package io.ctif.proiect.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.ctif.proiect.model.GenerateRequest;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,14 +13,18 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.FluxSink;
 
+
+@Slf4j
 @RestController
 @RequestMapping("/api/chat")
 public class ChatController {
 
     private final WebClient webClient;
-
+    @Value("${ollama.url}")
+    private String ollamaUrl;
     public ChatController(WebClient.Builder webClientBuilder) {
-        this.webClient = webClientBuilder.baseUrl("http://localhost:11434").build();
+        log.info("Ollama URL: {}", ollamaUrl);
+        this.webClient = webClientBuilder.baseUrl(ollamaUrl).build();
     }
 
     @GetMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE)
