@@ -1,7 +1,6 @@
 "use client";
 import { useState } from 'react';
 import { getAiResponse } from "@/app/chat/chat";
-import { motion } from 'framer-motion';
 import LoadingDots from "@/components/LoadingDots";
 
 export default function Chat() {
@@ -40,14 +39,14 @@ export default function Chat() {
                 <h1 className="text-2xl font-extrabold mb-4 text-center mt-4">Ask IntelliChat</h1>
                 <div className="flex flex-col h-[80vh] border border-gray-300 rounded-lg overflow-y-auto">
                     <div className="flex-1 p-4 space-y-4">
-                        {/* Displaying response */}
+
                         {response && (
                             <div className="p-4 bg-gray-50 border border-gray-300 rounded-lg text-left">
                                 <h2 className="text-xl font-semibold text-gray-800 mb-2">IntelliChat:</h2>
                                 <p>{response}</p>
                             </div>
                         )}
-                        {/* Loading animation */}
+
                         {loading && (
                             <LoadingDots />
                         )}

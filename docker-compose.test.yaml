@@ -1,10 +1,6 @@
-
-
-version: '3.8'
-
 services:
   nextjs:
-    image: git-lab.ctif.md:4567/catalin.raebschi/frontend:test
+    image: git-lab.ctif.md:4567/catalin.raebschi/frontend
     build:
       context: .
       dockerfile: Dockerfile
@@ -12,6 +8,4 @@ services:
       - "3000:3000"
     environment:
       - NODE_ENV=production
-    volumes:
-      - .:/app
     command: ["pnpm", "start"]

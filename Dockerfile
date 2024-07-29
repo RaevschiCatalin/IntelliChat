@@ -8,14 +8,13 @@ WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
 
 # Install dependencies
-
 RUN npm install -g pnpm && pnpm install --prod
 
+# Copy the source code
+COPY . .
 
-# Copy the build output and other necessary files
-COPY .next ./.next
-COPY public ./public
-COPY next.config.mjs ./next.config.mjs
+# Build the Next.js application
+RUN pnpm build
 
 # Expose the port on which the application will run
 EXPOSE 3000
