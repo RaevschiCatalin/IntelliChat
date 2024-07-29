@@ -21,6 +21,7 @@ test:
   stage: test
   script:
     - docker run --rm my-backend-image ./run-tests.sh
+    - echo "Runner is working!"
 
 deploy:
   stage: deploy
