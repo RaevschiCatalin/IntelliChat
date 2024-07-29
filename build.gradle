@@ -75,7 +75,7 @@ jib {
 
     container {
         ports = ['8080'] // Ports to expose
-        mainClass = 'com.example.MainClass' // Replace with your main class
+
     }
 
     allowInsecureRegistries = true // Allow insecure registries if needed
