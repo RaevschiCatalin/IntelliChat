@@ -26,6 +26,7 @@ deploy:
   stage: deploy
   script:
     - echo "Deploying image..."
-    - docker run --rm my-backend-image ./deploy.sh
+    - docker pull git-lab.ctif.md:4567/catalin.raebschi/backend:latest
+    - docker run --rm git-lab.ctif.md:4567/catalin.raebschi/backend:latest ./deploy.sh
   only:
     - master
