@@ -1,0 +1,28 @@
+stages:
+  - build
+  - test
+  - deploy
+
+variables:
+  DOCKER_DRIVER: overlay2
+
+services:
+  - docker:dind
+
+before_script:
+  - docker info
+
+build:
+  stage: build
+  script:
+    - docker build -t my-backend-image .
+
+test:
+  stage: test
+  script:
+    - docker run --rm my-backend-image ./run-tests.sh
+
+deploy:
+  stage: deploy
+  script:
+    - docker run --rm my-backend-image ./deploy.sh
