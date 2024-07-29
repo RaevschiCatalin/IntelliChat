@@ -1,3 +1,4 @@
+version: '3'
 services:
   nextjs:
     image: git-lab.ctif.md:4567/catalin.raebschi/frontend
@@ -9,3 +10,5 @@ services:
     environment:
       - NODE_ENV=production
     command: ["pnpm", "start"]
+    volumes:
+      - .:/app
