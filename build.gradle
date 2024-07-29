@@ -64,7 +64,7 @@ jib {
         image = 'azul/zulu-openjdk:21-jre' // Base image
     }
     to {
-        image = 'git-lab.ctif.md:4567/catalin.raebschi/backend' // Target image
+        image = 'git-lab.ctif.md:4567/catalin.raebschi/backend'
         tags = ['test', 'latest'] // Tags for the image
 
         auth {
