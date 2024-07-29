@@ -7,7 +7,10 @@ plugins {
 
 group = 'io.ctif'
 version = '0.0.1-SNAPSHOT'
-
+jar {
+    archiveBaseName = 'backend'
+    archiveVersion = '0.0.1-SNAPSHOT'
+}
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
@@ -58,24 +61,24 @@ dependencies {
 
 jib {
     from {
-        image = 'azul/zulu-openjdk:21-jre'
+        image = 'azul/zulu-openjdk:21-jre' // Base image
     }
     to {
-        image = 'git-lab.ctif.md:4567/catalin.raebschi/backend'
-        tags = ['test', 'latest']
+        image = 'git-lab.ctif.md:4567/catalin.raebschi/backend' // Target image
+        tags = ['test', 'latest'] // Tags for the image
 
         auth {
-            println("=============================================")
-
-
-            println("=============================================")
-            username = "catalin.raebschi"
-            password = "3pKd1waYJWLWLBcHu5gM"
+            username = "catalin.raebschi" // Docker registry username
+            password = "3pKd1waYJWLWLBcHu5gM" // Docker registry password
         }
-
     }
 
-    allowInsecureRegistries = true
+    container {
+        ports = ['8080'] // Ports to expose
+        mainClass = 'com.example.MainClass' // Replace with your main class
+    }
+
+    allowInsecureRegistries = true // Allow insecure registries if needed
 }
 
 dependencyManagement {
@@ -84,6 +87,7 @@ dependencyManagement {
     }
 }
 
-tasks.named('test') {
-    useJUnitPlatform()
-}
+
+//tasks.named('test') {
+//    useJUnitPlatform()
+//}

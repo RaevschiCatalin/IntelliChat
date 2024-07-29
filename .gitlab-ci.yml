@@ -1,3 +1,5 @@
+image: gradle:7.6-jdk17
+
 stages:
   - build
   - test
@@ -6,24 +8,24 @@ stages:
 variables:
   DOCKER_DRIVER: overlay2
 
-services:
-  - docker:dind
-
 before_script:
-  - docker info
+  - gradle --version
 
 build:
   stage: build
   script:
-    - docker build -t my-backend-image .
+    - gradle jib
 
 test:
   stage: test
   script:
-    - docker run --rm my-backend-image ./run-tests.sh
-    - echo "Runner is working!"
+    - gradle test
+    - echo "Tests completed successfully!"
 
 deploy:
   stage: deploy
   script:
+    - echo "Deploying image..."
     - docker run --rm my-backend-image ./deploy.sh
+  only:
+    - master
