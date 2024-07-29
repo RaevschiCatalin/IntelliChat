@@ -18,7 +18,7 @@ public class ProiectApplication {
 
     @GetMapping
     public String hello(){
-        return "Hello World"+webClientConfig.getUrl();
+        return "Hello World"+ webClientConfig.getUrl();
     }
 
 
