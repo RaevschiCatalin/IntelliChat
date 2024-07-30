@@ -14,7 +14,7 @@ RUN npm install -g pnpm && pnpm install --prod
 COPY . .
 
 # Build the Next.js application
-RUN pnpm build
+RUN pnpm build --verbose
 
 # Expose the port on which the application will run
 EXPOSE 3000
