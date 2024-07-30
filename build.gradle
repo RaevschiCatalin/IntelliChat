@@ -77,7 +77,6 @@ jib {
         ports = ['8080']
 
     }
-
     allowInsecureRegistries = true
 }
 
