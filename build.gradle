@@ -61,24 +61,24 @@ dependencies {
 
 jib {
     from {
-        image = 'azul/zulu-openjdk:21-jre' // Base image
+        image = 'azul/zulu-openjdk:21-jre'
     }
     to {
         image = 'git-lab.ctif.md:4567/catalin.raebschi/backend'
-        tags = ['test', 'latest'] // Tags for the image
+        tags = ['test', 'latest']
 
         auth {
-            username = "catalin.raebschi" // Docker registry username
-            password = "3pKd1waYJWLWLBcHu5gM" // Docker registry password
+            username = "catalin.raebschi"
+            password = "3pKd1waYJWLWLBcHu5gM"
         }
     }
 
     container {
-        ports = ['8080'] // Ports to expose
+        ports = ['8080']
 
     }
 
-    allowInsecureRegistries = true // Allow insecure registries if needed
+    allowInsecureRegistries = true
 }
 
 dependencyManagement {
@@ -88,6 +88,6 @@ dependencyManagement {
 }
 
 
-//tasks.named('test') {
-//    useJUnitPlatform()
-//}
+tasks.named('test') {
+    useJUnitPlatform()
+}
