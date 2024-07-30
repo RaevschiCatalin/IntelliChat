@@ -1,13 +1,18 @@
 image: gradle:8.5-jdk21
 
+services:
+  - docker:dind
+
+variables:
+  DOCKER_DRIVER: overlay2
+  DOCKER_HOST: tcp://docker:2375
+
 stages:
   - build
   - test
   - deploy
 
-variables:
-  DOCKER_DRIVER: overlay2
-
+# Optional: Check Gradle version before the script
 #before_script:
 #  - gradle --version
 
@@ -24,7 +29,7 @@ test:
 
 deploy:
   stage: deploy
-  image: docker:dind
+  image: docker:latest
   script:
     - echo "Deploying image..."
     - docker pull git-lab.ctif.md:4567/catalin.raebschi/backend:latest
