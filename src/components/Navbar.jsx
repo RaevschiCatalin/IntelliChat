@@ -29,11 +29,10 @@ const Navbar = () => {
                           className="text-gray-900 hover:text-blue-600 transition duration-400 ease-in-out">Home</Link>
                     <Link href="/chat"
                           className="text-gray-900 hover:text-blue-600 transition duration-400 ease-in-out">Chat</Link>
-                    <Link href="#about"
+                    <Link href="/about"
                           className="text-gray-900 hover:text-blue-600 transition duration-400 ease-in-out">About</Link>
-                    <Link href="#services"
-                          className="text-gray-900 hover:text-blue-600 transition duration-400 ease-in-out">Services</Link>
-                    <Link href="#contact"
+
+                    <Link href="/contact"
                           className="text-gray-900 hover:text-blue-600 transition duration-400 ease-in-out">Contact</Link>
                 </div>
                 <div className="hidden md:flex space-x-4">

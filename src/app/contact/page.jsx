@@ -1,6 +1,7 @@
 "use client";
 import Head from 'next/head';
 import { useState } from 'react';
+import {Button} from "@/components/ui/button";
 
 const Contact = () => {
     const [name, setName] = useState('');
@@ -19,8 +20,8 @@ const Contact = () => {
                 <title>Contact Us</title>
                 <meta name="description" content="Get in touch with us for inquiries and support." />
             </Head>
-            <div className="container mx-auto px-4 py-8">
-                <h1 className="text-4xl font-bold mb-4">Contact Us</h1>
+            <div className="container  mx-auto px-4 py-8">
+                <h1 className="text-4xl mt-12 font-bold mb-4">Contact Us</h1>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
                         <label htmlFor="name" className="block text-lg font-medium mb-1">Name</label>
@@ -29,7 +30,7 @@ const Contact = () => {
                             id="name"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            className="input input-bordered w-full"
+                            className="input input-bordered w-full bg-white"
                             required
                         />
                     </div>
@@ -40,7 +41,7 @@ const Contact = () => {
                             id="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            className="input input-bordered w-full"
+                            className="input input-bordered w-full bg-white"
                             required
                         />
                     </div>
@@ -50,12 +51,12 @@ const Contact = () => {
                             id="message"
                             value={message}
                             onChange={(e) => setMessage(e.target.value)}
-                            className="textarea textarea-bordered w-full"
+                            className="textarea textarea-bordered w-full bg-white"
                             rows="4"
                             required
                         />
                     </div>
-                    <button type="submit" className="btn btn-primary">Send Message</button>
+                    <Button type="submit" >Send Message</Button>
                 </form>
             </div>
         </>

@@ -1,5 +1,6 @@
-export const getAiResponse = async (input, onData, onComplete, onError) => {
-    const url = `http://localhost:8080/api/chat?model=llama3.1&prompt=${encodeURIComponent(input)}&temperature=0.7`;
+// In chat.js
+export const getAiResponse = async (input, style, onData, onComplete, onError) => {
+    const url = `http://localhost:8080/api/chat?model=llama3.1&prompt=${encodeURIComponent(input)}&temperature=${style}`;
 
     try {
         const eventSource = new EventSource(url);
@@ -10,7 +11,6 @@ export const getAiResponse = async (input, onData, onComplete, onError) => {
                     const trimmedData = event.data.trim();
                     console.log('Received raw data:', trimmedData);
 
-                    // Handling various data formats
                     if (trimmedData.startsWith('data:')) {
                         const jsonString = trimmedData.replace(/^data:/, '');
                         const data = JSON.parse(jsonString);
@@ -31,7 +31,15 @@ export const getAiResponse = async (input, onData, onComplete, onError) => {
             onError(error);
         };
 
+        return eventSource; // Return EventSource object to control from outside
+
     } catch (error) {
         onError(error);
+    }
+};
+
+export const stopAiResponse = (eventSource) => {
+    if (eventSource) {
+        eventSource.close();
     }
 };
