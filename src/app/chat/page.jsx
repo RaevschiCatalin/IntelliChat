@@ -124,8 +124,8 @@ export default function Chat() {
                         <div className="flex justify-center space-x-2">
                             <button
                                 type="button"
-                                onClick={() => setTemperature(0.3)}
-                                className={`btn ${temperature === 0.3 ? 'btn-active text-white' : 'btn-outline text-black'}`}
+                                onClick={() => setTemperature(0.1)}
+                                className={`btn ${temperature === 0.1 ? 'btn-active text-white' : 'btn-outline text-black'}`}
                             >
                                 Precise
                             </button>
@@ -138,8 +138,8 @@ export default function Chat() {
                             </button>
                             <button
                                 type="button"
-                                onClick={() => setTemperature(1.0)}
-                                className={`btn ${temperature === 1.0 ? 'btn-active text-white' : 'btn-outline text-black'}`}
+                                onClick={() => setTemperature(0.9)}
+                                className={`btn ${temperature === 0.9 ? 'btn-active text-white' : 'btn-outline text-black'}`}
                             >
                                 Creative
                             </button>
