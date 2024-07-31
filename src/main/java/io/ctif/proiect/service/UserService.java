@@ -27,11 +27,6 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    public void userDetailsService() {
-        return;
-    }
-
-
     public UserDetails loadUserByUsername(String email) {
         return userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
     }

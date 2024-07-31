@@ -60,7 +60,7 @@ public class EmailVerificationService {
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
             helper.setTo(user.getEmail());
             helper.setSubject(subject);
-            helper.setText(body, true); // Set the text to HTML
+            helper.setText(body, true);
 
             mailSender.send(mimeMessage);
             logger.info("Verification email sent to {}", user.getEmail());
