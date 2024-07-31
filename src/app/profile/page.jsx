@@ -51,7 +51,7 @@ export default function Profile() {
                     <p className="text-gray-700 mb-2"><span className="font-bold">Updated At:</span> {new Date(userData.updatedAt).toLocaleDateString()}</p>
                     <div className="mt-6">
                         <button
-                            className="w-full py-3 px-4 bg-black text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full py-3 px-4 bg-black text-white font-semibold rounded-lg shadow-md hover:bg-white hover:text-black border-2 border-black focus:outline-none focus:ring-2 focus:ring-blue-500"
                             onClick={() => window.location.reload()}
                         >
                             Refresh Profile

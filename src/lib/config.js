@@ -4,6 +4,7 @@ const config = {
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID || 'default-google-client-id',
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET || 'default-google-client-secret',
     NEXTAUTH_URL: process.env.NEXTAUTH_URL || 'http://localhost:3000',
+    AUTH_SECRET: process.env.AUTH_SECRET || 'default-auth-secret',
 };
 
 export default config;
