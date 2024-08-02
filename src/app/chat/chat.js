@@ -1,6 +1,9 @@
-// In chat.js
+import config from "@/lib/config";
+
+
 export const getAiResponse = async (input, style, onData, onComplete, onError) => {
-    const url = `http://localhost:8080/api/chat?model=llama3.1&prompt=${encodeURIComponent(input)}&temperature=${style}`;
+    const {API_BASE_URL} = config;
+    const url = `${API_BASE_URL}/chat?model=llama3.1&prompt=${encodeURIComponent(input)}&temperature=${style}`;
 
     try {
         const eventSource = new EventSource(url);
