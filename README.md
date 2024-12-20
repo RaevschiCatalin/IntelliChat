@@ -6,12 +6,19 @@ IntelliChat is an advanced AI-powered chat application that redefines the way yo
 
 ## 🛠️ Tech Stack
 
-- [React](https://react.dev/) - Sleek and modern front-end UI.
-- [Spring Boot](https://spring.io/projects/spring-boot) - Powerful backend framework for seamless integration.
-- [PostgreSQL](https://www.postgresql.org/) - Reliable database for structured data.
-- [JWT](https://jwt.io/) - Secure authentication.
-- [Docker](https://www.docker.com/) - Efficient containerization for consistent environments.
-- [NGINX](https://www.nginx.com/) - High-performance load balancing.
+- <img src="https://img.icons8.com/?size=100&id=wPohyHO_qO1a&format=png&color=000000" height="20"/> [React](https://react.dev/) - A powerful JavaScript library for building user interfaces.
+- <img src="https://img.icons8.com/?size=100&id=90519&format=png&color=000000" height="20"/> [Spring Boot](https://spring.io/projects/spring-boot) - A framework for building Java-based backend applications.
+- <img src="https://img.icons8.com/?size=100&id=38561&format=png&color=000000" height="20"/> [PostgreSQL](https://www.postgresql.org/) - A reliable and powerful relational database system.
+- <img src="https://img.icons8.com/?size=100&id=rHpveptSuwDz&format=png&color=000000" height="20"/> [JWT](https://jwt.io/) - A compact, URL-safe means of representing claims to be transferred between two parties.
+- <img src="https://cdn4.iconfinder.com/data/icons/logos-and-brands/512/97_Docker_logo_logos-512.png" height="20"/> [Docker](https://www.docker.com/) - A platform for developing, shipping, and running applications in containers.
+- <img src="https://img.icons8.com/?size=100&id=t2x6DtCn5Zzx&format=png&color=000000" height="20"/> [NGINX](https://www.nginx.com/) - A high-performance web server and load balancer.
+- <img src="https://img.icons8.com/?size=100&id=4PiNHtUJVbLs&format=png&color=000000" height="20"/> [Tailwind CSS](https://tailwindcss.com/) - A utility-first CSS framework for creating custom designs.
+
+---
+
+## 🖥️ REST API
+
+IntelliChat is built with a REST API, allowing seamless communication between the front end and back end. This provides the flexibility to easily extend the application and integrate it with other systems in the future.
 
 ---
 
@@ -69,7 +76,7 @@ IntelliChat is an advanced AI-powered chat application that redefines the way yo
 
 ## 🌐 Live Demo
 
-[Check out IntelliChat here!](#)
+[Check out IntelliChat here!](https://intelli-chat-frontend.vercel.app/)
 
 ---
 
