@@ -1,0 +1,35 @@
+image: gradle:8.5-jdk21
+
+services:
+  - docker:dind
+
+
+stages:
+  - build
+  - test
+  - deploy
+
+# Optional: Check Gradle version before the script
+#before_script:
+#  - gradle --version
+
+build:
+  stage: build
+  script:
+    - gradle jib
+
+test:
+  stage: test
+  script:
+    - gradle test
+    - echo "Tests completed successfully!"
+
+deploy:
+  stage: deploy
+  image: docker:latest
+  script:
+    - echo "Deploying image..."
+    - docker pull git-lab.ctif.md:4567/catalin.raebschi/backend:latest
+    - docker run --rm git-lab.ctif.md:4567/catalin.raebschi/backend:latest
+  only:
+    - master
