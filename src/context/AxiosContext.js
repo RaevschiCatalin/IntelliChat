@@ -1,7 +1,7 @@
 "use client";
 import { createContext, useContext, useState, useEffect } from 'react';
-import axiosInstance from "@/lib/axiosInstance";
-import config from "@/lib/config";
+import axiosInstance from "../lib/axiosInstance";
+import config from "../lib/config";
 
 import axios from "axios";
 

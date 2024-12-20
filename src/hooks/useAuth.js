@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useAxios } from '@/context/AxiosContext';
+import { useAxios } from '../context/AxiosContext';
 
 const useAuth = () => {
     const { token } = useAxios(); // Access token from context or any other method

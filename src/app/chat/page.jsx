@@ -1,9 +1,9 @@
 "use client";
 import { useState } from 'react';
-import { getAiResponse, stopAiResponse } from "@/app/chat/chat";
-import useAuth from '@/hooks/useAuth';
-import LoadingInfinity from "@/components/LoadingInfinity";
-import LoadingDots from "@/components/LoadingDots";
+import { getAiResponse, stopAiResponse } from "../chat/chat";
+import useAuth from '../../hooks/useAuth';
+import LoadingInfinity from "../../components/LoadingInfinity";
+import LoadingDots from "../../components/LoadingDots";
 
 export default function Chat() {
     const { loading: authLoading, isAuthenticated } = useAuth();

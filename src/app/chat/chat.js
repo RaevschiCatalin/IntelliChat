@@ -1,4 +1,4 @@
-import config from "@/lib/config";
+import config from "../../lib/config";
 
 
 export const getAiResponse = async (input, style, onData, onComplete, onError) => {

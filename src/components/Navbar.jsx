@@ -1,11 +1,11 @@
 "use client";
 import React from 'react';
-import { useAxios } from '@/context/AxiosContext';
+import { useAxios } from '../context/AxiosContext';
 import Link from 'next/link';
-import { Button } from "@/components/ui/button";
+import { Button } from "../components/ui/button";
 import { useRouter } from 'next/navigation';
 import Image from "next/image";
-import Logo from "@/assets/logo.svg";
+import Logo from "../assets/logo.svg";
 
 const Navbar = () => {
     const { token, logoutAUTH } = useAxios();

@@ -1,10 +1,9 @@
 "use client";
 import { useEffect, useState } from 'react';
-import { useAxios } from '@/context/AxiosContext';
-import LoadingInfinity from "@/components/LoadingInfinity";
+import { useAxios } from '../../context/AxiosContext';
+import LoadingInfinity from "../../components/LoadingInfinity";
 import {jwtDecode} from "jwt-decode";
-import { motion } from 'framer-motion';
-import { LucideIcon } from 'lucide-react';
+
 
 
 export default function Profile() {

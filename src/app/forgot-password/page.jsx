@@ -1,10 +1,10 @@
 "use client";
 import Link from 'next/link';
-import { Button } from "@/components/ui/button";
-import { Input } from '@/components/ui/input';
+import { Button } from "../../components/ui/button";
+import { Input } from '../../components/ui/input';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
-import { useAxios } from "@/context/AxiosContext";
+import { useAxios } from "../../context/AxiosContext";
 import { useRouter } from 'next/navigation';
 
 const ForgotPassword = () => {

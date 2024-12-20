@@ -1,7 +1,7 @@
 "use client";
 import Head from 'next/head';
 import { useState } from 'react';
-import {Button} from "@/components/ui/button";
+import {Button} from "../../components/ui/button";
 
 const Contact = () => {
     const [name, setName] = useState('');
