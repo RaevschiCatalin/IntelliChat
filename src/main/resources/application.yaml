@@ -1,0 +1,67 @@
+spring:
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: raevschicatalin@gmail.com
+    password: dody nlvs roxd lukb
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  ai:
+    ollama:
+      base-url: localhost:11434
+      chat:
+        options:
+          model: "llama3.1"
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 46141160460-khhorific26jm32u2een8i4msag08sst.apps.googleusercontent.com
+            client-secret: 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
+            scope: profile, email
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+        provider:
+          google:
+            issuer-uri: https://accounts.google.com
+  banner:
+    location: banner.txt
+  docker:
+    compose:
+      enabled: false
+
+  application:
+    name: App
+
+  datasource:
+    url: jdbc:postgresql://172.16.48.13:5432/postgres
+    username: myuser
+    password: mypassword
+    driverClassName: org.postgresql.Driver
+
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+server:
+  port: 8080
+
+springdoc:
+  api-docs:
+    path: /api-docs
+
+ollama:
+  url: http://172.16.48.13:11435
+
+jwt:
+  secret: 0684c7c87c4bfb5dc1b1c66b7bdcec2aa462f70a52498ccde03d8a02d26d0eb5
+  expiration: 86400000
+
+

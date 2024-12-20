@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # This file is a template, and might need editing before it works on your project.
 docker-build-master:
   # Official docker image.
@@ -41,3 +42,40 @@ deploy:
     - docker run -d --name my-local-container -p 80:80 "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
   only:
     - master
+=======
+image: gradle:8.5-jdk21
+
+services:
+  - docker:dind
+
+
+stages:
+  - build
+  - test
+  - deploy
+
+# Optional: Check Gradle version before the script
+#before_script:
+#  - gradle --version
+
+build:
+  stage: build
+  script:
+    - gradle jib
+
+test:
+  stage: test
+  script:
+    - gradle test
+    - echo "Tests completed successfully!"
+
+deploy:
+  stage: deploy
+  image: docker:latest
+  script:
+    - echo "Deploying image..."
+    - docker pull git-lab.ctif.md:4567/catalin.raebschi/backend:latest
+    - docker run --rm git-lab.ctif.md:4567/catalin.raebschi/backend:latest
+  only:
+    - master
+>>>>>>> backend/master
