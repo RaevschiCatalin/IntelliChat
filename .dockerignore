@@ -46,7 +46,7 @@ temp
 README.md
 Dockerfile
 docker-compose.yml
-docker-compose.yaml
+
 
 # Ignore git-related files
 .git

@@ -1,6 +1,17 @@
 version: '3.8'
 
 services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - .:/app
+    command: [ "pnpm", "start" ]
   postgres:
     image: postgres:latest
     container_name: my_postgres
@@ -27,6 +38,21 @@ services:
       - postgres_network
     command:
       - ollama run llama3.1
+  backend:
+    image: git-lab.ctif.md:4567/catalin.raebschi/backend:latest
+    container_name: my_backend
+    ports:
+      - "8080:8080"
+    networks:
+      - postgres_network
+    depends_on:
+      - postgres
+      - ollama
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/mydatabase
+      SPRING_DATASOURCE_USERNAME: myuser
+      SPRING_DATASOURCE_PASSWORD: mypassword
+      OLLAMA_URL: http://ollama:11434
 networks:
   postgres_network:
     driver: bridge
