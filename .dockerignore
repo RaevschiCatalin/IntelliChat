@@ -44,7 +44,7 @@ temp
 
 # Ignore other project files
 README.md
-Dockerfile
+
 docker-compose.yml
 
 

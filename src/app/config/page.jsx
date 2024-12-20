@@ -1,4 +1,4 @@
-import config from "@/lib/config"
+import config from "../../lib/config"
 
 export default function Config() {
     const {BACKEND_PATH, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, API_BASE_URL, NEXTAUTH_URL} = config;

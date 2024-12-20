@@ -1,11 +1,11 @@
 import "./globals.css";
-import ReactQueryProvider from "@/providers/ReactQueryProvider";
+import ReactQueryProvider from "../providers/ReactQueryProvider";
 import {Inter as FontSans} from "next/font/google"
-import { cn } from "@/lib/utils"
-import Navbar from "@/components/Navbar";
+import { cn } from "../lib/utils"
+import Navbar from "../components/Navbar";
 import '@radix-ui/themes/styles.css';
 import {Theme} from "@radix-ui/themes";
-import {AxiosProvider} from "@/context/AxiosContext";
+import {AxiosProvider} from "../context/AxiosContext";
 import Head from "next/head";
 
 const fontSans = FontSans({
@@ -15,7 +15,7 @@ const fontSans = FontSans({
 
 export const metadata = {
   title: "IntelliChat",
-  description: "IntelliChat is a chatbot that uses Llama3.1 to generate responses.",
+  description: "IntelliChat is a chatbot that uses Llama3.3 to generate responses.",
 };
 
 export default function RootLayout({ children }) {

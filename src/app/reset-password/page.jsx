@@ -1,6 +1,6 @@
 "use client"
 import { useEffect, useState } from 'react';
-import ResetPasswordForm from '@/components/ResetPasswordForm';
+import ResetPasswordForm from '../../components/ResetPasswordForm';
 
 const ResetPasswordPage = () => {
     const [token, setToken] = useState('');

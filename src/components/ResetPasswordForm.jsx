@@ -2,9 +2,9 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { useAxios } from '@/context/AxiosContext';
+import { Button } from '../components/ui/button';
+import { Input } from '../components/ui/input';
+import { useAxios } from '../context/AxiosContext';
 
 const ResetPasswordForm = ({ token }) => {
     const [newPassword, setNewPassword] = useState('');

@@ -1,12 +1,12 @@
 "use client";
 import Link from 'next/link';
-import { Button } from "@/components/ui/button";
-import { Input } from '@/components/ui/input';
+import { Button } from "../../components/ui/button";
+import { Input } from '../../components/ui/input';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
-import { useAxios } from "@/context/AxiosContext";
+import { useAxios } from "../../context/AxiosContext";
 import { useState } from 'react';
-import { signIn } from 'next-auth/react';
+
 
 const Login = () => {
     const router = useRouter();

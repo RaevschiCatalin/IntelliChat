@@ -1,9 +1,9 @@
 "use client";
 import { useState, useEffect } from 'react';
-import { useAxios } from '@/context/AxiosContext';
+import { useAxios } from '../context/AxiosContext';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { Button } from "@/components/ui/button";
+import { Button } from "../components/ui/button";
 
 export default function Home() {
     const { token } = useAxios();

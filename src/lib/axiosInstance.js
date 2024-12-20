@@ -1,5 +1,5 @@
 import axios from 'axios';
-import config from "@/lib/config"
+import config from "../lib/config"
 
 const {API_BASE_URL} = config;
 
