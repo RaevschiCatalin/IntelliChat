@@ -21,8 +21,8 @@ public class ChatController {
     private final WebClient webClient;
     private final WebClientConfig webClientConfig;
 
-    @Value("${ollama.url}")
-    private String ollamaUrl;
+//     @Value("${ai.ollama.base-url}")
+    private String ollamaUrl="http://localhost:11434";
 
     public ChatController(WebClient.Builder webClientBuilder, WebClientConfig webClientConfig) {
         this.webClient = webClientBuilder.baseUrl(webClientConfig.getUrl()).build();

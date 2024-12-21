@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 
 # Node.js
 node_modules/
@@ -143,8 +143,8 @@ build/
 # Temporary files
 .tmp
 *.tmp
-
+/src/.env
 
 test/node_modules/
 frontend/node_modules/
->>>>>>> backend/master
+secrets.env
