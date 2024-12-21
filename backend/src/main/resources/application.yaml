@@ -1,48 +1,31 @@
 spring:
-
   mail:
-    host: smtp.gmail.com
-    port: 587
-    username: raevschicatalin@gmail.com
-    password: dody nlvs roxd lukb
+    host: ${SPRING_MAIL_HOST}
+    port: ${SPRING_MAIL_PORT}
+    username: ${SPRING_MAIL_USERNAME}
+    password: ${SPRING_MAIL_PASSWORD}
     properties:
       mail:
         smtp:
           auth: true
           starttls:
             enable: true
+
   ai:
     ollama:
-      base-url: localhost:11434
+      base-url: ${AI_OLLAMA_BASE_URL}
       chat:
         options:
-          model: "llama3.1"
-  security:
-    oauth2:
-      client:
-        registration:
-          google:
-            client-id: 46141160460-khhorific26jm32u2een8i4msag08sst.apps.googleusercontent.com
-            client-secret: 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
-            scope: profile, email
-            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
-        provider:
-          google:
-            issuer-uri: https://accounts.google.com
-  banner:
-    location: banner.txt
-  docker:
-    compose:
-      enabled: false
+          model: ${AI_OLLAMA_CHAT_MODEL}
 
-  application:
-    name: App
+  banner:
+    location: ${SPRING_BANNER_LOCATION}
 
   datasource:
-    url: jdbc:postgresql://172.16.48.13:5432/postgres
-    username: myuser
-    password: mypassword
-    driverClassName: org.postgresql.Driver
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    driverClassName: ${SPRING_DATASOURCE_DRIVER_CLASS_NAME}
 
   jpa:
     database: POSTGRESQL
@@ -51,17 +34,12 @@ spring:
       ddl-auto: update
 
 server:
-  port: 8080
+  port: ${SERVER_PORT}
 
 springdoc:
   api-docs:
-    path: /api-docs
-
-ollama:
-  url: http://172.16.48.13:11435
+    path: ${SPRINGDOC_API_DOCS_PATH}
 
 jwt:
-  secret: 0684c7c87c4bfb5dc1b1c66b7bdcec2aa462f70a52498ccde03d8a02d26d0eb5
-  expiration: 86400000
-
-
+  secret: ${JWT_SECRET}
+  expiration: ${JWT_EXPIRATION}

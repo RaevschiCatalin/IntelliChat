@@ -8,7 +8,8 @@ WORKDIR /app
 COPY pnpm-lock.yaml package.json ./
 
 # Install dependencies
-RUN npm install -g pnpm && pnpm install
+RUN npm install -g pnpm
+RUN pnpm install --frozen-lockfile
 RUN pnpm --version
 
 # Copy the rest of the app
@@ -21,4 +22,4 @@ RUN pnpm build
 EXPOSE 3000
 
 # Start the application
-CMD ["pnpm", "start"]
+CMD ["pnpm", "run", "dev"]
