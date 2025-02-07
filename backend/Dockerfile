@@ -7,8 +7,8 @@ WORKDIR /app
 COPY gradlew gradlew.bat build.gradle settings.gradle /app/
 COPY gradle /app/gradle
 
-# Download dependencies
-RUN ./gradlew --no-daemon dependencies
+# Make Gradle wrapper executable
+RUN chmod +x /app/gradlew
 
 # Copy source code
 COPY src /app/src
@@ -24,13 +24,8 @@ WORKDIR /app
 # Copy the built JAR from the previous stage
 COPY --from=build /app/build/libs/proiect-0.0.1-SNAPSHOT.jar app.jar
 
-# Set environment variables
-ENV SPRING_OUTPUT_ANSI_ENABLED=ALWAYS \
-    JAVA_OPTS="" \
-    APP_JAR="app.jar"
-
 # Expose the app's port
 EXPOSE 8080
 
 # Run the application
-ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]

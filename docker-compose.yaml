@@ -6,11 +6,11 @@ services:
     ports:
       - "3000:3000"
     environment:
-      NODE_ENV: production
+      NODE_ENV: developement
     volumes:
       - ./src:/app
     working_dir: /app
-    command: ["pnpm", "run", "dev"]
+    command: ["pnpm",  "dev"]
 
   backend:
     build:
@@ -19,8 +19,8 @@ services:
     container_name: my_backend
     ports:
       - "8080:8080"
-    volumes:
-        - ./backend:/app
+#    volumes:
+#        - ./backend:/app
     networks:
       - app_network
     depends_on:

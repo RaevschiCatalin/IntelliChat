@@ -1,4 +1,7 @@
 spring:
+  docker:
+    compose:
+      file: ../docker-compose.yaml
   mail:
     host: ${SPRING_MAIL_HOST}
     port: ${SPRING_MAIL_PORT}
@@ -19,7 +22,7 @@ spring:
           model: ${AI_OLLAMA_CHAT_MODEL}
 
   banner:
-    location: ${SPRING_BANNER_LOCATION}
+    location: ./banner.txt
 
   datasource:
     url: ${SPRING_DATASOURCE_URL}
