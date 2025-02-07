@@ -9,11 +9,14 @@ COPY pnpm-lock.yaml package.json ./
 
 # Install dependencies
 RUN npm install -g pnpm
-RUN pnpm install --frozen-lockfile
-RUN pnpm --version
+RUN pnpm install
+RUN pnpm list tailwindcss postcss autoprefixer
 
 # Copy the rest of the app
 COPY . .
+
+# Set permissions
+RUN chmod -R 777 /app/.next
 
 # Build the app
 RUN pnpm build
@@ -22,4 +25,4 @@ RUN pnpm build
 EXPOSE 3000
 
 # Start the application
-CMD ["pnpm", "run", "dev"]
+CMD ["pnpm", "dev"]
