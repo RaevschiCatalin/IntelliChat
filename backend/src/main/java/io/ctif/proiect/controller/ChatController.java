@@ -19,14 +19,9 @@ import reactor.core.publisher.Flux;
 public class ChatController {
 
     private final WebClient webClient;
-    private final WebClientConfig webClientConfig;
-
-//     @Value("${ai.ollama.base-url}")
-    private String ollamaUrl="http://localhost:11434";
 
     public ChatController(WebClient.Builder webClientBuilder, WebClientConfig webClientConfig) {
         this.webClient = webClientBuilder.baseUrl(webClientConfig.getUrl()).build();
-        this.webClientConfig = webClientConfig;
     }
 
     @GetMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE)
@@ -37,7 +32,6 @@ public class ChatController {
     ) {
         return Flux.create(emitter -> {
             try {
-                log.info("Ollama URL: {}", webClientConfig.getUrl());
                 GenerateRequest request = new GenerateRequest(model, prompt, temperature);
                 String jsonInputString = new ObjectMapper().writeValueAsString(request);
 
@@ -47,7 +41,7 @@ public class ChatController {
                         .bodyValue(jsonInputString)
                         .retrieve()
                         .bodyToFlux(String.class)
-                        .doOnNext(data -> emitter.next("data:" + data + "\n\n"))
+                        .doOnNext(emitter::next)
                         .doOnComplete(emitter::complete)
                         .doOnError(emitter::error)
                         .subscribe();
