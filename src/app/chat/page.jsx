@@ -29,24 +29,25 @@ export default function Chat() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if(isAsking) return;
+        if (isAsking) return;
         setLoading(true);
         setIsAsking(true);
 
-        setMessages(prevMessages => [...prevMessages, { type: 'user', text: input }]);
+        setMessages((prevMessages) => [...prevMessages, { type: 'user', text: input }]);
 
         const onData = (data) => {
-            setMessages(prevMessages => {
+            setMessages((prevMessages) => {
                 if (prevMessages.length === 0 || prevMessages[prevMessages.length - 1].type !== 'ai') {
                     return [...prevMessages, { type: 'ai', text: data }];
                 }
                 const newMessages = [...prevMessages];
-                newMessages[newMessages.length - 1].text += data;
+                newMessages[newMessages.length - 1].text = data; // Update the last AI message
                 return newMessages;
             });
         };
 
-        const onComplete = () => {
+        const onComplete = (finalResponse) => {
+            console.log('Final response:', finalResponse);
             setLoading(false);
             setIsAsking(false);
         };
