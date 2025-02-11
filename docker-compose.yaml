@@ -1,26 +1,26 @@
+version: "3.8"
+
 services:
   frontend:
     build:
       context: ./src
       dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
-    environment:
-      NODE_ENV: developement
-    volumes:
-      - ./src:/app
-    working_dir: /app
-    command: ["pnpm",  "dev"]
+    labels:
+      - "traefik.http.routers.frontend.rule=Host(`intelli-chat.tech`)"
+      - "traefik.http.services.frontend.loadbalancer.server.port=3000"
+    networks:
+      - app_network
+    depends_on:
+      - backend
 
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
     container_name: my_backend
-    ports:
-      - "8080:8080"
-#    volumes:
-#        - ./backend:/app
+    labels:
+      - "traefik.http.routers.backend.rule=Host(`intelli-chat.tech`) && PathPrefix(`/api`)"
+      - "traefik.http.services.backend.loadbalancer.server.port=8080"
     networks:
       - app_network
     depends_on:
@@ -33,10 +33,6 @@ services:
     image: postgres:latest
     container_name: my_postgres
     restart: always
-#    environment:
-#      POSTGRES_DB: ${POSTGRES_DB}
-#      POSTGRES_USER: ${POSTGRES_USER}
-#      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "5432:5432"
     volumes:
@@ -52,15 +48,25 @@ services:
     restart: always
     ports:
       - "11434:11434"
-    volumes:
-      - ollama_data:/app/data
     networks:
       - app_network
-#    environment:
-#      AI_OLLAMA_BASE_URL: ${AI_OLLAMA_BASE_URL}
-#      AI_OLLAMA_CHAT_MODEL: ${AI_OLLAMA_CHAT_MODEL}
     env_file:
       - secrets.env
+
+  traefik:
+    image: traefik:v2.10
+    container_name: traefik
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:80"
+    ports:
+      - "80:80"
+      - "8080:8080"
+    networks:
+      - app_network
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
 
 networks:
   app_network:
@@ -68,5 +74,3 @@ networks:
 
 volumes:
   postgres_data:
-  ollama_data:
-    driver: local
