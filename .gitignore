@@ -151,4 +151,4 @@ frontend/node_modules/
 *.env
 *.env.local
 secrets.env
-/secrets.env
+/secrets.envsecrets.env
