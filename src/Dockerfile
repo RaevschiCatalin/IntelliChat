@@ -10,19 +10,15 @@ COPY pnpm-lock.yaml package.json ./
 # Install dependencies
 RUN npm install -g pnpm
 RUN pnpm install
-RUN pnpm list tailwindcss postcss autoprefixer
 
 # Copy the rest of the app
 COPY . .
 
-# Set permissions
-RUN chmod -R 777 /app/.next
-
-# Build the app
+# Build the app (production build)
 RUN pnpm build
 
 # Expose the app on port 3000
 EXPOSE 3000
 
-# Start the application
-CMD ["pnpm", "dev"]
+# Start the application in production mode
+CMD ["pnpm", "start"]
