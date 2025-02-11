@@ -1,22 +1,20 @@
 "use client";
-import { useState } from 'react';
-import { getAiResponse, stopAiResponse } from "../chat/chat";
-import useAuth from '../../hooks/useAuth';
+import { useState } from "react";
+import { getAiResponse } from "../chat/chat";
+import useAuth from "../../hooks/useAuth";
 import LoadingInfinity from "../../components/LoadingInfinity";
 import LoadingDots from "../../components/LoadingDots";
 
 export default function Chat() {
     const { loading: authLoading, isAuthenticated } = useAuth();
-    const [input, setInput] = useState('');
+    const [input, setInput] = useState("");
     const [messages, setMessages] = useState([]);
     const [loading, setLoading] = useState(false);
     const [temperature, setTemperature] = useState(0.7);
     const [isAsking, setIsAsking] = useState(false);
+    const [currentResponse, setCurrentResponse] = useState(null);
 
-    if (authLoading) {
-        return <LoadingInfinity />;
-    }
-
+    if (authLoading) return <LoadingInfinity />;
     if (!isAuthenticated) {
         return (
             <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-gray-100 via-gray-200 to-gray-300">
@@ -33,128 +31,140 @@ export default function Chat() {
         setLoading(true);
         setIsAsking(true);
 
-        setMessages((prevMessages) => [...prevMessages, { type: 'user', text: input }]);
+        setMessages((prev) => [...prev, { type: "user", text: input }]);
 
         const onData = (data) => {
-            setMessages((prevMessages) => {
-                if (prevMessages.length === 0 || prevMessages[prevMessages.length - 1].type !== 'ai') {
-                    return [...prevMessages, { type: 'ai', text: data }];
+            setMessages((prev) => {
+                if (prev.length === 0 || prev[prev.length - 1].type !== "ai") {
+                    return [...prev, { type: "ai", text: data }];
                 }
-                const newMessages = [...prevMessages];
-                newMessages[newMessages.length - 1].text = data; // Update the last AI message
+                const newMessages = [...prev];
+                newMessages[newMessages.length - 1].text = data;
                 return newMessages;
             });
         };
 
-        const onComplete = (finalResponse) => {
-            console.log('Final response:', finalResponse);
+        const onComplete = () => {
             setLoading(false);
             setIsAsking(false);
+            setCurrentResponse(null);
         };
 
         const onError = (error) => {
-            console.error('Error fetching AI response:', error);
+            console.error("Error fetching AI response:", error);
             setLoading(false);
             setIsAsking(false);
+            setCurrentResponse(null);
         };
 
-        setInput('');
-        await getAiResponse(input, temperature, onData, onComplete, onError);
+        setInput("");
+        const response = await getAiResponse(input, temperature, onData, onComplete, onError);
+        setCurrentResponse(response); // Store the response object
     };
 
-    const handleStop = async () => {
-        await stopAiResponse();
-        setLoading(false);
+    const handleStop = () => {
+        currentResponse?.stop();
         setIsAsking(false);
+        setLoading(false);
+        setCurrentResponse(null);
     };
-
-    const handleClearChat = () => {
-        setMessages([]);
-    };
-
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-gray-100 via-gray-200 to-gray-300 p-4">
-            <div className="w-4/5 bg-gray-100 border-t border-gray-300 p-0 mt-12 mb-12 rounded-lg shadow-lg flex flex-col h-[80vh]">
-                <h1 className="text-2xl font-extrabold mb-4 text-center mt-4">Ask IntelliChat</h1>
-                <div className="flex-1 flex flex-col border border-gray-300 rounded-lg overflow-hidden">
-                    <div className="flex-1 p-4 bg-white space-y-4 overflow-y-auto">
-                        {messages.map((msg, index) => (
-                            <div key={index} className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}>
-                                <div className={`p-4 rounded-lg max-w-3/5 ${msg.type === 'user' ? 'bg-blue-200 text-right' : 'bg-gray-200 text-left'}`}>
-                                    <p className="text-lg">{msg.text}</p>
-                                </div>
-                            </div>
-                        ))}
-                        {loading && <LoadingDots />}
-                    </div>
-                    <form onSubmit={handleSubmit} className="bg-gray-100 p-4 border-t border-gray-300 flex flex-col space-y-4">
-                        <label htmlFor="question" className="block text-sm font-medium text-gray-700 mb-2">
-                            Enter your question
-                        </label>
-                        <div className="flex items-center space-x-2 mb-4">
-                            <input
-                                id="question"
-                                type="text"
-                                value={input}
-                                onChange={(e) => setInput(e.target.value)}
-                                placeholder="Type your question here..."
-                                className="block w-full p-3 border bg-gray-200 border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
-                                autoComplete="off"
-                                spellCheck="false"
-                            />
-                            <button
-                                type="submit"
-                                className={`btn ${isAsking ? 'btn-disabled' : 'btn-outline'}`}
-                                disabled={isAsking}
-                            >
-                               <svg height="48" viewBox="0 0 48 48" width="48" xmlns="http://www.w3.org/2000/svg"><path d="M4.02 42l41.98-18-41.98-18-.02 14 30 4-30 4z"/><path d="M0 0h48v48h-48z" fill="none"/></svg>
-                            </button>
-                            {isAsking && (
-                                <button
-                                    type="button"
-                                    onClick={handleStop}
-                                    className="btn btn-error"
+        <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-pink-100 to-blue-100 p-6">
+            <div className="w-3/4 max-w-4xl bg-white shadow-2xl rounded-3xl overflow-hidden flex flex-col h-[85vh]">
+                {/* Header */}
+                <header className="p-6 border-b border-gray-200">
+                    <h1 className="text-3xl font-bold text-center text-purple-600">Ask IntelliChat</h1>
+                </header>
 
-                                >
-                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                                    </svg>
-                                </button>
-                            )}
+                {/* Chat Messages */}
+                <main className="flex-1 p-6 space-y-4 overflow-y-auto bg-gray-50">
+                    {messages.map((msg, index) => (
+                        <div key={index} className={`flex ${msg.type === "user" ? "justify-end" : "justify-start"}`}>
+                            <div
+                                className={`px-4 py-3 max-w-[75%] rounded-xl break-words ${
+                                    msg.type === "user"
+                                        ? "bg-purple-200 text-purple-800"
+                                        : "bg-green-200 text-green-800"
+                                }`}
+                            >
+                                <p className="text-lg">{msg.text}</p>
+                            </div>
                         </div>
+                    ))}
+                    {loading && <LoadingDots />}
+                </main>
+
+                {/* Input Area */}
+                <footer className="p-6 border-t border-gray-200 bg-white">
+                    <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+                        {/* Temperature Preference (Swapped with Send Button) */}
                         <div className="flex justify-center space-x-2">
                             <button
                                 type="button"
                                 onClick={() => setTemperature(0.1)}
-                                className={`btn ${temperature === 0.1 ? 'btn-active text-white' : 'btn-outline text-black'}`}
+                                className={`btn rounded-full text-white ${
+                                    temperature === 0.1 ? "bg-purple-600" : "bg-gray-300 hover:bg-gray-400"
+                                }`}
                             >
                                 Precise
                             </button>
                             <button
                                 type="button"
                                 onClick={() => setTemperature(0.7)}
-                                className={`btn ${temperature === 0.7 ? 'btn-active text-white' : 'btn-outline text-black'}`}
+                                className={`btn rounded-full text-white ${
+                                    temperature === 0.7 ? "bg-purple-600" : "bg-gray-300 hover:bg-gray-400"
+                                }`}
                             >
                                 Balanced
                             </button>
                             <button
                                 type="button"
                                 onClick={() => setTemperature(0.9)}
-                                className={`btn ${temperature === 0.9 ? 'btn-active text-white' : 'btn-outline text-black'}`}
+                                className={`btn rounded-full text-white ${
+                                    temperature === 0.9 ? "bg-purple-600" : "bg-gray-300 hover:bg-gray-400"
+                                }`}
                             >
                                 Creative
                             </button>
                         </div>
+
+                        {/* Chat Input */}
+                        <div className="flex items-center space-x-2">
+                            <input
+                                id="question"
+                                type="text"
+                                value={input}
+                                onChange={(e) => setInput(e.target.value)}
+                                placeholder="Type your question here..."
+                                className="input input-bordered w-full rounded-full focus:outline-none focus:ring-2 focus:ring-purple-300"
+                                autoComplete="off"
+                                spellCheck="false"
+                            />
+                            <button
+                                type="submit"
+                                onClick={isAsking ? handleStop : handleSubmit}
+                                className={`btn transition-all duration-300 text-white px-6 ${
+                                    isAsking
+                                        ? "bg-red-600 hover:bg-red-700 w-14 h-14 rounded-full"
+                                        : "bg-purple-600 hover:bg-purple-700 rounded-full"
+                                }`}
+                            >
+                                {isAsking ? "Stop" : "Send"}
+                            </button>
+                        </div>
+
+
                         <button
                             type="button"
-                            onClick={handleClearChat}
-                            className="btn btn-outline w-full mt-2"
+                            onClick={() => setMessages([])}
+                            className="btn btn-outline w-full rounded-full border-gray-400 text-gray-600 hover:border-gray-600 hover:text-black"
                         >
                             Clear Chat
                         </button>
                     </form>
-                </div>
+                </footer>
             </div>
         </div>
     );
+
 }

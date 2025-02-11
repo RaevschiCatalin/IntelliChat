@@ -1,75 +1,80 @@
 import config from "../../lib/config";
 
-export const getAiResponse = async (input, style, onData, onComplete, onError) => {
+export const getAiResponse = (input, style, onData, onComplete, onError) => {
     const { API_BASE_URL } = config;
     const url = `${API_BASE_URL}/chat?model=llama3.2&prompt=${encodeURIComponent(input)}&temperature=${style}`;
 
-    let fullResponse = ''; // Variable to store the full response as it comes in.
-    let isDone = false; // Flag to track if the response is complete.
+    let fullResponse = "";
+    let isDone = false;
+    let isStopped = false;
 
-    try {
-        const eventSource = new EventSource(url);
+    const eventSource = new EventSource(url);
 
-        eventSource.onmessage = (event) => {
-            if (event.data) {
-                try {
-                    const trimmedData = event.data.trim();
-                    console.log('Received raw data:', trimmedData);
+    eventSource.onopen = () => {
+        console.log("EventSource connection opened");
+    };
 
-                    if (trimmedData.startsWith('data:')) {
-                        const jsonString = trimmedData.replace(/^data:/, '');
-                        const data = JSON.parse(jsonString);
+    eventSource.onmessage = (event) => {
+        if (isStopped) return;
+        if (!event.data) return;
 
-                        // Concatenate the response part
-                        fullResponse += data.response;
+        let dataStr = event.data.trim();
+        if (dataStr.startsWith("data:")) {
+            dataStr = dataStr.slice(5).trim();
+        }
 
-                        // Pass the updated full response to onData
-                        onData(fullResponse);
+        try {
+            const data = JSON.parse(dataStr);
+            console.log("Received raw data:", data);
 
-                        // If done, complete the process
-                        if (data.done) {
-                            isDone = true; // Mark the response as complete.
-                            eventSource.close(); // Close the connection explicitly.
-                            onComplete(fullResponse); // Pass the full response to onComplete
-                        }
-                    }
-                } catch (error) {
-                    console.error('Error parsing JSON data:', error);
-                    onError(error); // Notify the UI about the parsing error
+            if (data.response) {
+                const token = data.response;
+                const words = token.match(/(\S+\s*)/g);
+                if (words && words.length > 1) {
+                    words.forEach((word, index) => {
+                        setTimeout(() => {
+                            fullResponse += word;
+                            onData(fullResponse);
+                        }, index * 100);
+                    });
+                } else {
+                    fullResponse += token;
+                    onData(fullResponse);
                 }
             }
-        };
 
-        eventSource.onerror = (error) => {
-            console.error('EventSource error:', error);
-
-            // Only retry if the response is not yet complete
-            if (!isDone) {
-                eventSource.close(); // Close the current connection.
-                onError(error); // Notify the UI about the error.
-
-                // Retry after 3 seconds
-                setTimeout(() => {
-                    console.log('Retrying connection...');
-                    getAiResponse(input, style, onData, onComplete, onError);
-                }, 3000);
-            } else {
-                console.log('EventSource connection closed after completion.');
+            if (data.done) {
+                isDone = true;
+                eventSource.close();
+                onComplete(fullResponse);
             }
-        };
+        } catch (error) {
+            console.error("Error parsing JSON data:", error);
+            onError(error);
+        }
+    };
 
-        // Logging EventSource state
-        eventSource.onopen = () => {
-            console.log('EventSource connection opened');
-        };
-
-        eventSource.onclose = () => {
-            console.log('EventSource connection closed');
-        };
-
-        return eventSource; // Return EventSource object to control from outside
-    } catch (error) {
-        console.error('Error initiating EventSource:', error);
+    eventSource.onerror = (error) => {
+        if (isStopped || isDone) {
+            console.log("EventSource connection closed.");
+            return;
+        }
+        console.error("EventSource error:", error);
+        eventSource.close();
         onError(error);
-    }
+        setTimeout(() => {
+            if (!isStopped && !isDone) {
+                getAiResponse(input, style, onData, onComplete, onError);
+            }
+        }, 3000);
+    };
+
+    const stop = () => {
+        if (!isStopped) {
+            isStopped = true;
+            eventSource.close();
+            console.log("EventSource connection stopped by user");
+        }
+    };
+    return { stop };
 };

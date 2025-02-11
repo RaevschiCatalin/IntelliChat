@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: linear-gradient(to bottom right, #ffe4e6, #bfdbfe);
     --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
@@ -64,7 +64,8 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
+    /*background: linear-gradient(to bottom right, #ffe4e6, #bfdbfe) !important;*/
   }
 }
 .custom-button {

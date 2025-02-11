@@ -8,7 +8,13 @@ import axios from "axios";
 const AxiosContext = createContext();
 
 export const AxiosProvider = ({ children }) => {
-    const [token, setToken] = useState(null);
+    const [token, setToken] = useState(() => {
+        if (typeof window !== 'undefined') {
+            return localStorage.getItem('jwtToken');
+        }
+        return null;
+    });
+
     useEffect(() => {
         const storedToken = localStorage.getItem('jwtToken');
         if (storedToken) {
