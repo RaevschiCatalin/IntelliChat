@@ -59,26 +59,6 @@ dependencies {
 }
 
 
-jib {
-    from {
-        image = 'azul/zulu-openjdk:21-jre'
-    }
-    to {
-        image = 'git-lab.ctif.md:4567/catalin.raebschi/backend'
-        tags = ['test', 'latest']
-
-        auth {
-            username = "catalin.raebschi"
-            password = "3pKd1waYJWLWLBcHu5gM"
-        }
-    }
-
-    container {
-        ports = ['8080']
-
-    }
-    allowInsecureRegistries = true
-}
 
 dependencyManagement {
     imports {
