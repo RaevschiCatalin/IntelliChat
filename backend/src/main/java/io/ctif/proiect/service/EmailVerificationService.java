@@ -49,7 +49,7 @@ public class EmailVerificationService {
 
     private void sendVerificationEmail(User user, String token) {
         String subject = "Email Verification";
-        String url = "http://localhost:8080/api/auth/verify-email?token=" + token;
+        String url = "https://intelli-chat.tech/api/auth/verify-email?token=" + token;
 
         Context context = new Context();
         context.setVariable("verificationUrl", url);
@@ -84,7 +84,7 @@ public class EmailVerificationService {
 
     public void sendResetPasswordEmail(User user, String token) {
         String subject = "Reset Password";
-        String url = "http://localhost:3000/reset-password?token=" + token;
+        String url = "https://intelli-chat.tech/reset-password?token=" + token;
 
         Context context = new Context();
         context.setVariable("resetUrl", url);
