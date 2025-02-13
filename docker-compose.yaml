@@ -19,6 +19,7 @@ services:
       - "traefik.enable=true"
     env_file:
       - ./secrets.env
+    
   frontend:
     build:
       context: ./src
