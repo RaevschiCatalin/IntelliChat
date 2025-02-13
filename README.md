@@ -11,7 +11,7 @@ IntelliChat is an advanced AI-powered chat application that redefines the way yo
 - <img src="https://img.icons8.com/?size=100&id=38561&format=png&color=000000" height="20"/> [PostgreSQL](https://www.postgresql.org/) - A reliable and powerful relational database system.
 - <img src="https://img.icons8.com/?size=100&id=rHpveptSuwDz&format=png&color=000000" height="20"/> [JWT](https://jwt.io/) - A compact, URL-safe means of representing claims to be transferred between two parties.
 - <img src="https://cdn4.iconfinder.com/data/icons/logos-and-brands/512/97_Docker_logo_logos-512.png" height="20"/> [Docker](https://www.docker.com/) - A platform for developing, shipping, and running applications in containers.
-- <img src="https://img.icons8.com/?size=100&id=t2x6DtCn5Zzx&format=png&color=000000" height="20"/> [NGINX](https://www.nginx.com/) - A high-performance web server and load balancer.
+- <img src="https://github.com/traefik/traefik/blob/master/docs/content/assets/img/traefik.logo.png?raw=true" height="20"/> [Traefik](https://traefik.io/traefik/) - A high-performance reverse proxy and load balancer (written in Go btw).
 - <img src="https://img.icons8.com/?size=100&id=4PiNHtUJVbLs&format=png&color=000000" height="20"/> [Tailwind CSS](https://tailwindcss.com/) - A utility-first CSS framework for creating custom designs.
 
 ---
