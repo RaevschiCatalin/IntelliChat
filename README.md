@@ -1,4 +1,4 @@
-# 🤖 IntelliChat: Your AI Conversation Partner  
+# 🤖 <a href="https://intelli-chat.tech">IntelliChat</a>: Your AI Conversation Partner  
 
 IntelliChat is an advanced AI-powered chat application that redefines the way you interact with intelligent systems. Powered by Meta's state-of-the-art **Llama 3.2 LLM** (via Ollama), IntelliChat delivers highly contextual, meaningful, and human-like conversations that adapt to your needs. With a robust and scalable architecture, IntelliChat is designed for speed, reliability, and security.
 
