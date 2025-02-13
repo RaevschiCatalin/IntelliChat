@@ -1,7 +1,7 @@
 
 const config = {
     BACKEND_PATH: process.env.BACKEND_PATH || 'default/path',
-    API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8080/api',
+    API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL || 'https://intelli-chat.tech/api',
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID || 'default-google-client-id',
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET || 'default-google-client-secret',
     NEXTAUTH_URL: process.env.NEXTAUTH_URL || 'http://localhost:3000',
