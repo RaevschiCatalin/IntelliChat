@@ -66,17 +66,32 @@ IntelliChat is built with a REST API, allowing seamless communication between th
    git clone https://github.com/yourusername/intellichat.git
    cd intellichat
    ```
-2. Build and run the application using Docker Compose:
+2. Create a secrets.env file with the following structure:
    ```bash
-   docker-compose up --build
+   AI_OLLAMA_BASE_URL=
+   AI_OLLAMA_CHAT_MODEL=
+   SPRING_MAIL_HOST=
+   SPRING_MAIL_PORT=
+   SPRING_MAIL_USERNAME=
+   SPRING_MAIL_PASSWORD=
+   SPRING_DATASOURCE_URL=
+   SPRING_DATASOURCE_USERNAME=
+   SPRING_DATASOURCE_PASSWORD=
+   JWT_SECRET=
+   JWT_EXPIRATION=
    ```
-3. Access IntelliChat in your browser at `http://localhost`.
+   
+3. Build and run the application using Docker Compose:
+   ```bash
+   docker compose up --build
+   ```
+4. Access IntelliChat in your browser at `http://localhost:3000`.
 
 ---
 
 ## 🌐 Live Demo
 
-[Check out IntelliChat here!](https://intelli-chat-frontend.vercel.app/)
+[Check out IntelliChat here!](https://intelli-chat.tech)
 
 ---
 
